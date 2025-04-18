@@ -82,13 +82,6 @@ const locations = [
     logo: "/adm-logo.svg",
     position: [40.145, 67.875],
   },
-  {
-    id: 7,
-    name: "Tashkilot nomi",
-    address: "Manzil",
-    logo: "/adm-logo.svg",
-    position: [40.145, 67.875],
-  },
 ];
 
 const Companies = () => {
