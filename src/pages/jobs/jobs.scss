@@ -112,15 +112,154 @@
   }
 
   .results-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
+    margin: 30px 0;
 
-    .no-results-message {
-      font-size: 18px;
-      color: #6b7280;
-      text-align: center;
+    .job-card {
+      max-width: 300px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 24px;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+      .job-header {
+        margin-bottom: 20px;
+
+        .job-title {
+          font-size: 20px;
+          font-weight: 600;
+          color: #111827;
+          margin: 0 0 8px 0;
+        }
+
+        .application-status {
+          font-size: 14px;
+          color: #0056b3;
+          margin: 0 0 16px 0;
+        }
+
+        .job-tags {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 16px;
+
+          .job-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+
+            &.full-time {
+              background-color: #e6f7e6;
+              color: #62a8bd;
+            }
+
+            &.office {
+              background-color: #c6c7f6;
+              color: #0056b3;
+            }
+          }
+        }
+
+        .job-salary {
+          font-size: 15px;
+          color: #4b5563;
+
+          .salary-label {
+            margin-right: 5px;
+          }
+
+          .salary-value {
+            font-weight: 500;
+          }
+        }
+      }
+
+      .company-info {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        .company-logo {
+          margin-right: 16px;
+
+          .logo-container {
+            width: 60px;
+            height: 60px;
+            background-color: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            .logo-inner {
+              width: 50px;
+              height: 50px;
+              background-color: #fff;
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23FF6347' d='M50,5L5,50l45,45l45-45L50,5z M50,75L25,50l25-25l25,25L50,75z'/%3E%3C/svg%3E");
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+          }
+        }
+
+        .company-details {
+          flex: 1;
+
+          .company-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+            margin: 0 0 4px 0;
+          }
+
+          .company-location {
+            font-size: 14px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            margin: 0;
+
+            .location-icon {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              margin-right: 4px;
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'%3E%3C/path%3E%3Ccircle cx='12' cy='10' r='3'%3E%3C/circle%3E%3C/svg%3E");
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+          }
+        }
+
+        .external-link {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+
+          .link-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #9ca3af;
+            padding: 4px;
+
+            &:hover {
+              color: #6b7280;
+            }
+
+            svg {
+              width: 18px;
+              height: 18px;
+            }
+          }
+        }
+      }
     }
   }
 
