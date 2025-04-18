@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./header.scss";
 import logo from "../../assets/logo.png";
 import BurgerMenu from "./components/burger-menu/burger-menu";
+import prof from "../../assets/prof.webp";
 
 export const Header = () => {
   return (
@@ -32,8 +33,10 @@ export const Header = () => {
             </div>
 
             <div className="header__right">
-              <div className="header__lang">O'zbekcha</div>
-              <div className="header__profile"></div>
+              <div className="header__lang">O'z</div>
+              <div className="header__profile">
+                <img src={prof} alt="" />
+              </div>
             </div>
           </div>
         </div>

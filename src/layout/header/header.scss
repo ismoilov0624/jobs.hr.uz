@@ -1,5 +1,4 @@
 .header {
-  // position: fixed;
   width: 100%;
   top: 0;
   z-index: 100;
@@ -56,6 +55,13 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    @media (max-width: 950px) {
+      margin-right: 2rem;
+    }
+    @media (max-width: 770px) {
+      margin-right: 3rem;
+    }
 
     .header__lang {
       font-size: 0.9rem;

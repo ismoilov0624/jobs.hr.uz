@@ -1,3 +1,7 @@
+.bm-overlay {
+  top: 0;
+}
+
 .bm-burger-button {
   position: absolute;
   width: 30px;
@@ -23,6 +27,10 @@
 
 .bm-cross {
   background: #000;
+}
+
+.bm-menu-wrap {
+  top: 0;
 }
 
 .bm-menu {
