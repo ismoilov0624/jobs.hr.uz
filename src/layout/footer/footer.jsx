@@ -20,6 +20,19 @@ export const Footer = () => {
           <Link to="/companies">Tashkilotlar</Link>
         </div>
 
+        <div className="footer__contact">
+          <p>Kontaktlar</p>
+          <div className="footer__contactItem">
+            <span>info@jobshr.uz</span>
+          </div>
+          <div className="footer__contactItem">
+            <span>+998 90 123 45 67</span>
+          </div>
+          <div className="footer__contactItem">
+            <span>Andijon, Uzbekistan</span>
+          </div>
+        </div>
+
         <div className="footer__socials">
           <p>Bizning ijtimoiy tarmoqlar:</p>
           <div className="footer__icons">
@@ -28,7 +41,7 @@ export const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src={telegram} alt="" />
+              <img src={telegram} alt="Telegram" />
             </a>
           </div>
         </div>
