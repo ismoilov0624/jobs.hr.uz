@@ -20,6 +20,9 @@
   &__logo {
     .nav__logo {
       max-width: 150px;
+      @media (max-width: 600px) {
+        max-width: 120px;
+      }
     }
   }
 

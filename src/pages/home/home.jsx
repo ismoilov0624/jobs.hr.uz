@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import jobs from "../../assets/jobs.png";
 import home_about from "../../assets/home_about.jpeg";
 import comp_logo from "../../assets/comp_logo.png";
+import CountUp from "react-countup";
 
 export const Home = () => {
   return (
@@ -26,19 +27,27 @@ export const Home = () => {
         <div className="container">
           <div className="home__stats">
             <div className="home__stat-box">
-              <h2>0</h2>
+              <h2>
+                <CountUp end={4} duration={2} />
+              </h2>
               <p>Bo'sh ish o'rinlari</p>
             </div>
             <div className="home__stat-box">
-              <h2>8</h2>
+              <h2>
+                <CountUp end={8} duration={2} />
+              </h2>
               <p>Tashkilotlar</p>
             </div>
             <div className="home__stat-box">
-              <h2>39934</h2>
+              <h2>
+                <CountUp end={39934} duration={2.5} separator=" " />
+              </h2>
               <p>Nomzodlar</p>
             </div>
             <div className="home__stat-box">
-              <h2>131</h2>
+              <h2>
+                <CountUp end={131} duration={2} />
+              </h2>
               <p>Barcha ish joylari</p>
             </div>
           </div>
@@ -84,36 +93,18 @@ export const Home = () => {
               <Link to="/companies">Barchasi</Link>
             </div>
             <div className="home__companies__list">
-              <div className="home__companies__item">
-                <div className="home__companies__item__wrapper">
-                  <img src={comp_logo} alt="Company logo" />
-                  <div className="home__companies__item__content">
-                    <p>ADM Electrics</p>
-                    <p>Andijon viloyati</p>
+              {[1, 2, 3].map((_, i) => (
+                <div className="home__companies__item" key={i}>
+                  <div className="home__companies__item__wrapper">
+                    <img src={comp_logo} alt="Company logo" />
+                    <div className="home__companies__item__content">
+                      <p>ADM Electrics</p>
+                      <p>Andijon viloyati</p>
+                    </div>
                   </div>
+                  <button>Bo'sh ish o'rinlari</button>
                 </div>
-                <button>Bo'sh ish o'rinlari</button>
-              </div>
-              <div className="home__companies__item">
-                <div className="home__companies__item__wrapper">
-                  <img src={comp_logo} alt="Company logo" />
-                  <div className="home__companies__item__content">
-                    <p>ADM Electrics</p>
-                    <p>Andijon viloyati</p>
-                  </div>
-                </div>
-                <button>Bo'sh ish o'rinlari</button>
-              </div>
-              <div className="home__companies__item">
-                <div className="home__companies__item__wrapper">
-                  <img src={comp_logo} alt="Company logo" />
-                  <div className="home__companies__item__content">
-                    <p>ADM Electrics</p>
-                    <p>Andijon viloyati</p>
-                  </div>
-                </div>
-                <button>Bo'sh ish o'rinlari</button>
-              </div>
+              ))}
             </div>
           </div>
         </div>
