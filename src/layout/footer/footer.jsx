@@ -3,6 +3,7 @@ import "./footer.scss";
 import { Link } from "react-router-dom";
 import logo from "../../../public/logo.png";
 import telegram from "../../assets/telegram.svg";
+import facebook from "../../assets/facebook.svg";
 
 export const Footer = () => {
   return (
@@ -42,6 +43,13 @@ export const Footer = () => {
               rel="noopener noreferrer"
             >
               <img src={telegram} alt="Telegram" />
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61575490258963"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={facebook} alt="Facebook" />
             </a>
           </div>
         </div>
