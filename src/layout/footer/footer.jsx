@@ -1,7 +1,7 @@
 import React from "react";
 import "./footer.scss";
 import { Link } from "react-router-dom";
-import logo from "../../../public/logo.png";
+import logo from "../../assets/logo.png";
 import telegram from "../../assets/telegram.svg";
 import facebook from "../../assets/facebook.svg";
 

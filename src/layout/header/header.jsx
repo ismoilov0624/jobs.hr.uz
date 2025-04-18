@@ -29,6 +29,14 @@ export const Header = () => {
                 <Link to="/companies" className="header__link">
                   Tashkilotlar
                 </Link>
+                <a
+                  href="https://t.me/HR_JOBS_UZB"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="header__link"
+                >
+                  Telegram kanal
+                </a>
               </nav>
             </div>
 
