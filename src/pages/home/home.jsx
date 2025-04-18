@@ -5,8 +5,10 @@ import jobs from "../../assets/jobs.png";
 import home_about from "../../assets/home_about.jpeg";
 import comp_logo from "../../assets/comp_logo.png";
 import CountUp from "react-countup";
+import { useScrollTop } from "../../hooks/useScrollTop";
 
 export const Home = () => {
+  useScrollTop(0);
   return (
     <div className="home">
       <div className="home__hero">
@@ -15,7 +17,9 @@ export const Home = () => {
             <div className="home__text">
               <h1>Jobs HR ish e'lonlari</h1>
               <p>Eng so‘nggi va ishonchli ish e'lonlarini shu yerda toping.</p>
-              <button className="home__btn">E'lonlarni ko‘rish</button>
+              <Link className="home__btn" to="/jobs">
+                E'lonlarni ko‘rish
+              </Link>
             </div>
 
             <div className="home__image">

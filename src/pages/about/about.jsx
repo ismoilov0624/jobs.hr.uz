@@ -1,8 +1,10 @@
 import React from "react";
 import "./about.scss";
 import home_about from "../../assets/home_about.jpeg";
+import { useScrollTop } from "../../hooks/useScrollTop";
 
 export const About = () => {
+  useScrollTop(0);
   return (
     <div className="home__about">
       <div className="container">

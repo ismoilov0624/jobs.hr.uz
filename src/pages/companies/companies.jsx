@@ -13,6 +13,7 @@ import "./companies.scss";
 import L from "leaflet";
 import { Link } from "react-router-dom";
 import comp_logo from "../../assets/comp_logo.png";
+import { useScrollTop } from "../../hooks/useScrollTop";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -40,39 +41,39 @@ const activeIcon = new L.Icon({
 const locations = [
   {
     id: 1,
-    name: "ADM Jizzakh",
-    address: "Jizzax viloyati, Sh.Rashidov tumani",
-    logo: "/src/assets/comp_logo.png",
-    position: [40.115, 67.842],
-  },
-  {
-    id: 2,
-    name: "ROODELL",
-    address: "Toshkent shahri, Sergeli tumani",
-    logo: "/roodell-logo.svg",
-    position: [41.257, 69.244],
-  },
-  {
-    id: 3,
     name: "ADM ELECTRICS",
     address: "Andijon viloyati, Asaka tumani",
-    logo: "/adm-logo.svg",
+    logo: "/src/assets/comp_logo.png",
     position: [40.632689, 72.23947],
     active: true,
   },
   {
-    id: 4,
-    name: "ADM COMPONENT",
-    address: "Jizzax viloyati, Sh.Rashidov tumani",
+    id: 2,
+    name: "UzAuto Motors",
+    address: "Andijon viloyati, Asaka tumani",
+    logo: "/roodell-logo.svg",
+    position: [40.65814560148366, 72.23243366948995],
+  },
+  {
+    id: 3,
+    name: "BEST PIPE AND PARTS",
+    address: "Andijon viloyati, Asaka tumani",
     logo: "/adm-logo.svg",
-    position: [40.125, 67.855],
+    position: [40.635194138955605, 72.24575528403479],
+  },
+  {
+    id: 4,
+    name: "Avtocomponent",
+    address: "Andijon viloyati, Asaka tumani",
+    logo: "/adm-logo.svg",
+    position: [40.65702054406056, 72.20382587748158],
   },
   {
     id: 5,
-    name: "ADMC DASAN",
-    address: "Jizzax viloyati, Sh.Rashidov tumani",
+    name: "Uzkoramko",
+    address: "Andijon viloyati",
     logo: "/adm-logo.svg",
-    position: [40.135, 67.865],
+    position: [40.74074097362105, 72.3175495675151],
   },
   {
     id: 6,
@@ -91,9 +92,10 @@ const locations = [
 ];
 
 const Companies = () => {
-  const [activeLocation, setActiveLocation] = useState(3);
+  useScrollTop(0);
+  const [activeLocation, setActiveLocation] = useState(1);
   const [mapCenter, setMapCenter] = useState(
-    locations.find((loc) => loc.id === 3).position
+    locations.find((loc) => loc.id === 1).position
   );
   const [mapZoom, setMapZoom] = useState(15);
 
@@ -198,7 +200,6 @@ const Companies = () => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | &copy; Nextech'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              {/* Only show one marker for the active location */}
               <Marker
                 position={
                   locations.find((loc) => loc.id === activeLocation).position
