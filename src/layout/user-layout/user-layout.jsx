@@ -1,21 +1,59 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import "./user-layout.scss";
 
 export const UserLayout = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 4fr" }}>
-      <div style={{ border: "1px solid red", height: "90vh" }}>
-        <h1>
-          <Link to="/profile">Overview</Link>
-        </h1>
-        <h1>
-          <Link to="/profile/personal-infos">PersonalInfos</Link>
-        </h1>
-        <h1>
-          <Link to="/profile/edit-profile">EditProfile</Link>
-        </h1>
+    <div className="user-layout">
+      <button
+        className={`user-layout__burger ${isOpen ? "sidebar-open" : ""}`}
+        onClick={toggleSidebar}
+      >
+        ☰
+      </button>
+
+      <div className={`user-layout__sidebar ${isOpen ? "active" : ""}`}>
+        <Link
+          to="/profile"
+          onClick={closeSidebar}
+          className={location.pathname === "/profile" ? "active" : ""}
+        >
+          Overview
+        </Link>
+
+        <Link
+          to="/profile/personal-infos"
+          onClick={closeSidebar}
+          className={
+            location.pathname === "/profile/personal-infos" ? "active" : ""
+          }
+        >
+          Personal Infos
+        </Link>
+
+        <Link
+          to="/profile/edit-profile"
+          onClick={closeSidebar}
+          className={
+            location.pathname === "/profile/edit-profile" ? "active" : ""
+          }
+        >
+          Edit Profile
+        </Link>
       </div>
-      <div style={{ border: "1px solid red", height: "90vh" }}>
+
+      <div className="user-layout__content">
         <Outlet />
       </div>
     </div>
