@@ -4,6 +4,8 @@ import { useSignup } from "../signup/service/mutation/useSignup";
 import { saveState } from "../../../config/storage.js";
 import Cookies from "js-cookie";
 import { useNavigate, Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify"; // Import both toast and ToastContainer
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 import "./signup.scss";
 
 export const Signup = () => {
@@ -20,10 +22,34 @@ export const Signup = () => {
   const submit = (data) => {
     mutate(data, {
       onSuccess: (res) => {
+        // Set user token and save user data in local storage
         Cookies.set("user_token", res.accessToken, { expires: 1 });
         saveState("user", res.user);
+
+        // Show success toast
+        // toast.success("Registration successful! Welcome!", {
+        //   position: "top-right",
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        // });
+
+        // Navigate to login page
         navigate("/login", { replace: true });
       },
+      // onError: (error) => {
+      //   // Show error toast
+      //   toast.error("Registration failed! Please try again.", {
+      //     position: "top-right",
+      //     autoClose: 5000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //   });
+      // },
     });
     reset();
   };
@@ -35,7 +61,7 @@ export const Signup = () => {
       </Link>
 
       <form onSubmit={handleSubmit(submit)} className="signup-form">
-        <h2 className="title"> Ro'yxatdan o'tish</h2>
+        <h2 className="title">Ro'yxatdan o'tish</h2>
 
         <div>
           <input
@@ -92,6 +118,9 @@ export const Signup = () => {
           Ro'yxatdan o'tish
         </button>
       </form>
+
+      {/* Toast container to show notifications */}
+      <ToastContainer />
     </div>
   );
 };

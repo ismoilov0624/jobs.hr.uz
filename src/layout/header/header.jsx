@@ -42,9 +42,9 @@ export const Header = () => {
 
             <div className="header__right">
               <div className="header__lang">O'z</div>
-              <div className="header__profile">
+              <Link to="/profile" className="header__profile">
                 <img src={prof} alt="" />
-              </div>
+              </Link>
               <div className="header__auth">
                 <Link to="/signup" className="burger__link">
                   Ro'yxatdan o'tish

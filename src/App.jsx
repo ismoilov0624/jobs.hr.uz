@@ -9,10 +9,14 @@ import Jobs from "./pages/jobs/jobs";
 import Companies from "./pages/companies/companies";
 import { Signup } from "./pages/auth/signup/signup";
 import { Login } from "./pages/auth/login/login";
+import { UserLayout } from "./layout/user-layout/user-layout";
+import { Overview } from "./pages/user/overview/overview";
+import { EditProfile } from "./pages/user/edit-profile.jsx/edit-profile";
 
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { PersonalInfos } from "./pages/user/personal-infos/personal-infos";
 
 function App() {
   useEffect(() => {
@@ -23,13 +27,18 @@ function App() {
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/companies" element={<Companies />} />
+        <Route path="about" element={<About />} />
+        <Route path="jobs" element={<Jobs />} />
+        <Route path="companies" element={<Companies />} />
+        <Route path="profile" element={<UserLayout />}>
+          <Route index element={<Overview />} />
+          <Route path="personal-infos" element={<PersonalInfos />} />
+          <Route path="edit-profile" element={<EditProfile />} />
+        </Route>
       </Route>
 
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="signup" element={<Signup />} />
+      <Route path="login" element={<Login />} />
     </Routes>
   );
 }

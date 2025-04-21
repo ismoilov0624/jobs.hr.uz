@@ -31,16 +31,16 @@ export const Login = () => {
   return (
     <div className="login-container">
       <Link to="/" className="home-link">
-        🏠 Home
+        🏠 Bosh sahifa
       </Link>
 
       <form onSubmit={handleSubmit(submit)} className="login-form">
-        <h2 className="title">Login</h2>
+        <h2 className="title">Kirish</h2>
 
         <div>
           <input
             {...register("phone")}
-            placeholder="Phone Number"
+            placeholder="Telefon raqam"
             className="input"
           />
         </div>
@@ -48,14 +48,14 @@ export const Login = () => {
         <div>
           <input
             {...register("password")}
-            placeholder="Password"
+            placeholder="Parol"
             type="password"
             className="input"
           />
         </div>
 
         <button type="submit" className="submit-btn">
-          {isPending ? "Logging in..." : "Login"}
+          Kirish
         </button>
       </form>
     </div>
