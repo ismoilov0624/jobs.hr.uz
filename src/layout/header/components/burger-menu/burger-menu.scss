@@ -56,3 +56,24 @@
 .menu-item:hover {
   color: #007bff;
 }
+
+.menu-auth {
+  margin-top: 2rem;
+  display: flex !important;
+  gap: 15px;
+}
+
+.burger-link {
+  padding: 10px;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid #0056b3;
+  border-radius: 5px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    color: #007bff;
+    border-color: #007bff;
+  }
+}

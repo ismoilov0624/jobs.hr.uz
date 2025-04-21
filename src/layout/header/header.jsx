@@ -45,6 +45,14 @@ export const Header = () => {
               <div className="header__profile">
                 <img src={prof} alt="" />
               </div>
+              <div className="header__auth">
+                <Link to="/signup" className="burger__link">
+                  Ro'yxatdan o'tish
+                </Link>
+                <Link to="/login" className="burger__link">
+                  Kirish
+                </Link>
+              </div>
             </div>
           </div>
         </div>
