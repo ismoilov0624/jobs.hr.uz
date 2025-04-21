@@ -8,7 +8,7 @@
     position: fixed;
     left: 16px;
     z-index: 9999;
-    background: #fff;
+    background: transparent;
     border: none;
     font-size: 26px;
     cursor: pointer;
@@ -20,7 +20,7 @@
     @media (max-width: 768px) {
       display: block;
       // default (sidebar closed)
-      top: 80px;
+      top: 90px;
 
       // when sidebar is open
       &.sidebar-open {
@@ -31,8 +31,8 @@
 
   &__sidebar {
     width: 250px;
-    background-color: #f9f9f9;
-    padding: 80px 20px 20px;
+    background-color: #61a4ec;
+    padding: 60px 20px 20px;
     transition: transform 0.3s ease;
     z-index: 1000;
 
@@ -50,7 +50,7 @@
       }
 
       &.active {
-        background-color: #cddfff;
+        background-color: #fff;
         color: #003087;
       }
     }
@@ -71,9 +71,9 @@
   }
 
   &__content {
+    background-color: #fafafa;
     flex-grow: 1;
-    padding: 30px;
-    margin-left: 40px;
+    padding: 50px;
     width: 100%;
   }
 }

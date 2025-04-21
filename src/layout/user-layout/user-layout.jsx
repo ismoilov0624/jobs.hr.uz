@@ -15,7 +15,7 @@ export const UserLayout = () => {
   };
 
   return (
-    <div className="user-layout">
+    <div className="user-layout container">
       <button
         className={`user-layout__burger ${isOpen ? "sidebar-open" : ""}`}
         onClick={toggleSidebar}
