@@ -9,11 +9,10 @@ const PersonalInfos = () => {
           <div className="avatar">
             <div className="avatar-image"></div>
           </div>
-          <div className="status-indicator"></div>
         </div>
 
         <div className="profile-details">
-          <h1 className="profile-name">Adhamdjon Ahmedov (Ahmad)</h1>
+          <h1 className="profile-name">Ism familiya</h1>
           <p className="profile-status">Ishsiz</p>
         </div>
 

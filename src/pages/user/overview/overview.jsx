@@ -7,7 +7,7 @@ const Overview = () => {
       <div className="breadcrumb">
         <span className="breadcrumb-item">Bosh sahifa</span>
         <span className="breadcrumb-separator">/</span>
-        <span className="breadcrumb-item active">Overview</span>
+        <span className="breadcrumb-item active">Umumiy</span>
       </div>
 
       <div className="overview-header">
