@@ -29,7 +29,7 @@ export const UserLayout = () => {
           onClick={closeSidebar}
           className={location.pathname === "/profile" ? "active" : ""}
         >
-          Overview
+          Umumiy
         </Link>
 
         <Link
@@ -39,7 +39,7 @@ export const UserLayout = () => {
             location.pathname === "/profile/personal-infos" ? "active" : ""
           }
         >
-          Personal Infos
+          Shaxsiy ma'lumotlar
         </Link>
 
         <Link
@@ -49,7 +49,7 @@ export const UserLayout = () => {
             location.pathname === "/profile/edit-profile" ? "active" : ""
           }
         >
-          Edit Profile
+          Profilni tahrirlash
         </Link>
       </div>
 
