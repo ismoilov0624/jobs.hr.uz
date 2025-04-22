@@ -3,7 +3,8 @@ $primary-color: #333;
 $secondary-color: #666;
 $light-gray: #f5f5f5;
 $border-color: #e0e0e0;
-$accent-color: #000;
+$accent-color: #ff9966;
+$yellow: #fff176;
 
 // Breakpoints
 $breakpoint-small: 576px;
@@ -60,6 +61,16 @@ $breakpoint-large: 992px;
   }
 }
 
+.status-indicator {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: $yellow;
+  border-radius: 50%;
+  bottom: 0;
+  left: 0;
+}
+
 .profile-details {
   flex: 1;
 
@@ -101,7 +112,7 @@ $breakpoint-large: 992px;
   }
 
   button {
-    background-color: #4d8de6;
+    background-color: #fff2ee;
     color: $accent-color;
     border: none;
     border-radius: 4px;
@@ -111,7 +122,7 @@ $breakpoint-large: 992px;
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #d3d2ec;
+      background-color: #ffe8e0;
     }
 
     @media (max-width: $breakpoint-medium) {
@@ -124,6 +135,7 @@ $breakpoint-large: 992px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
+  margin-bottom: 30px;
 
   @media (max-width: $breakpoint-medium) {
     grid-template-columns: 1fr;
@@ -165,4 +177,49 @@ $breakpoint-large: 992px;
 
 .info-value {
   color: $secondary-color;
+}
+
+/* New Personal Information Section Styles */
+.personal-info-section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  color: $primary-color;
+}
+
+.personal-info-card {
+  background-color: #f9f9f9;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+.info-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+
+  @media (max-width: $breakpoint-medium) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-column {
+  .info-item {
+    .info-label {
+      min-width: 180px;
+
+      @media (max-width: $breakpoint-large) {
+        min-width: 150px;
+      }
+
+      @media (max-width: $breakpoint-small) {
+        min-width: 120px;
+      }
+    }
+  }
 }
