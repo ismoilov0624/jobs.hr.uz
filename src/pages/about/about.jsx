@@ -1,6 +1,6 @@
 import React from "react";
 import "./about.scss";
-import home_about from "../../assets/home_about.jpeg";
+import home_about from "../../assets/home_about.jpg";
 import CountUp from "react-countup";
 import { useScrollTop } from "../../hooks/useScrollTop";
 

@@ -63,6 +63,7 @@ export const UserLayout = () => {
         >
           Profilni tahrirlash
         </Link>
+        <Link to="">Profildan chiqish</Link>
       </div>
 
       <div className="user-layout__content">

@@ -2,7 +2,7 @@ import React from "react";
 import "./home.scss";
 import { Link } from "react-router-dom";
 import jobs from "../../assets/jobs.png";
-import home_about from "../../assets/home_about.jpeg";
+import home_about from "../../assets/home_about.jpg";
 import comp_logo from "../../assets/comp_logo.png";
 import CountUp from "react-countup";
 import { useScrollTop } from "../../hooks/useScrollTop";
