@@ -5,26 +5,21 @@
 
   &__burger {
     display: none;
-    position: fixed;
-    left: 16px;
+    position: absolute;
+    left: 20px;
     z-index: 9999;
     background: transparent;
     border: none;
     font-size: 26px;
     cursor: pointer;
-    // padding: 8px 12px;
-    border-radius: 6px;
-    // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     transition: top 0.3s ease;
 
     @media (max-width: 768px) {
       display: block;
-      // default (sidebar closed)
-      top: 90px;
+      top: 30px;
 
-      // when sidebar is open
       &.sidebar-open {
-        top: 16px;
+        top: -70px;
       }
     }
   }
@@ -59,7 +54,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      height: 100%;
+      height: 100vh;
+      overflow-y: auto;
       transform: translateX(-100%);
       background-color: #fff;
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);

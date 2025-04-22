@@ -10,13 +10,13 @@ import Companies from "./pages/companies/companies";
 import { Signup } from "./pages/auth/signup/signup";
 import { Login } from "./pages/auth/login/login";
 import { UserLayout } from "./layout/user-layout/user-layout";
-import { Overview } from "./pages/user/overview/overview";
+import Overview from "./pages/user/overview/overview";
 import { EditProfile } from "./pages/user/edit-profile.jsx/edit-profile";
 
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { PersonalInfos } from "./pages/user/personal-infos/personal-infos";
+import PersonalInfos from "./pages/user/personal-infos/personal-infos";
 
 function App() {
   useEffect(() => {
