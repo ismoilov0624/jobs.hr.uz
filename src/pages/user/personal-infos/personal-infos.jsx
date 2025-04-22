@@ -9,7 +9,6 @@ export default function JobSearch() {
           <div className="avatar">
             <div className="avatar-image"></div>
           </div>
-          <div className="status-indicator"></div>
         </div>
 
         <div className="profile-details">

@@ -3,8 +3,7 @@ $primary-color: #333;
 $secondary-color: #666;
 $light-gray: #f5f5f5;
 $border-color: #e0e0e0;
-$accent-color: #449ed1;
-$yellow: #fff176;
+$accent-color: #000;
 
 // Breakpoints
 $breakpoint-small: 576px;
@@ -61,16 +60,6 @@ $breakpoint-large: 992px;
   }
 }
 
-.status-indicator {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background-color: $yellow;
-  border-radius: 50%;
-  bottom: 0;
-  left: 0;
-}
-
 .profile-details {
   flex: 1;
 
@@ -112,7 +101,7 @@ $breakpoint-large: 992px;
   }
 
   button {
-    background-color: #fff2ee;
+    background-color: #4d8de6;
     color: $accent-color;
     border: none;
     border-radius: 4px;
@@ -122,7 +111,7 @@ $breakpoint-large: 992px;
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #ffe8e0;
+      background-color: #d3d2ec;
     }
 
     @media (max-width: $breakpoint-medium) {

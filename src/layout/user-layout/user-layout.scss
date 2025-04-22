@@ -26,7 +26,7 @@
 
   &__sidebar {
     width: 250px;
-    background-color: #61a4ec;
+    background-color: #4d8de6;
     padding: 60px 20px 20px;
     transition: transform 0.3s ease;
     z-index: 1000;
@@ -34,19 +34,20 @@
     a {
       display: block;
       margin-bottom: 15px;
-      color: #333;
+      color: #ffffff;
       text-decoration: none;
       font-weight: 600;
       padding: 10px 14px;
       border-radius: 8px;
+      transition: background-color 0.2s, color 0.2s;
 
       &:hover {
-        background-color: #e0eaff;
+        background-color: #3977c4;
       }
 
       &.active {
-        background-color: #fff;
-        color: #003087;
+        background-color: #ffffff;
+        color: #003f80;
       }
     }
 
@@ -57,7 +58,7 @@
       height: 100vh;
       overflow-y: auto;
       transform: translateX(-100%);
-      background-color: #fff;
+      background-color: #4d8de6;
       box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 
       &.active {
