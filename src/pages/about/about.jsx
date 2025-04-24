@@ -48,7 +48,7 @@ export const About = () => {
           </div>
           <div className="home__stat-box">
             <h2>
-              <CountUp end={8} duration={2} />
+              <CountUp end={6} duration={2} />
             </h2>
             <p>Tashkilotlar</p>
           </div>
