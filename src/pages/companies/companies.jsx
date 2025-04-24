@@ -78,7 +78,7 @@ const locations = [
   {
     id: 6,
     name: "Asaka tuman yoshlar kichik sanoati",
-    address: "Jizzax viloyati, Sh.Rashidov tumani",
+    address: "Andijon viloyati, Asaka tumani",
     logo: "/adm-logo.svg",
     position: [40.66658135655309, 72.27242718391031],
   },
