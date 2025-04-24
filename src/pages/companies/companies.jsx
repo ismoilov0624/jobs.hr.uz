@@ -52,7 +52,7 @@ const locations = [
     name: "Akfa eshik romlari",
     address: "Andijon viloyati, Asaka tumani",
     logo: "/roodell-logo.svg",
-    position: [40.69166488693933, 72.28015231459541],
+    position: [40.64372987829876, 72.24692893562705],
   },
   {
     id: 3,
