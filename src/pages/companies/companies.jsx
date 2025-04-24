@@ -41,46 +41,46 @@ const activeIcon = new L.Icon({
 const locations = [
   {
     id: 1,
-    name: "ADM ELECTRICS",
+    name: "Asaka textile",
     address: "Andijon viloyati, Asaka tumani",
     logo: "/src/assets/comp_logo.png",
-    position: [40.632689, 72.23947],
+    position: [40.6273554119504, 72.2412747672116],
     active: true,
   },
   {
     id: 2,
-    name: "UzAuto Motors",
+    name: "Akfa eshik romlari",
     address: "Andijon viloyati, Asaka tumani",
     logo: "/roodell-logo.svg",
-    position: [40.65814560148366, 72.23243366948995],
+    position: [40.69166488693933, 72.28015231459541],
   },
   {
     id: 3,
-    name: "BEST PIPE AND PARTS",
+    name: "Asaka davr butlovchi MChJ",
     address: "Andijon viloyati, Asaka tumani",
     logo: "/adm-logo.svg",
-    position: [40.635194138955605, 72.24575528403479],
+    position: [40.61448889384213, 72.27074476062307],
   },
   {
     id: 4,
-    name: "Avtocomponent",
+    name: "Asaka Akfa va Mebellar",
     address: "Andijon viloyati, Asaka tumani",
     logo: "/adm-logo.svg",
-    position: [40.65702054406056, 72.20382587748158],
+    position: [40.67670250558059, 72.23352119925285],
   },
   {
     id: 5,
-    name: "Uzkoramko",
+    name: "Asaka yog'",
     address: "Andijon viloyati",
     logo: "/adm-logo.svg",
-    position: [40.74074097362105, 72.3175495675151],
+    position: [40.647518508252155, 72.25439077596566],
   },
   {
     id: 6,
-    name: "ADM STAMPING",
+    name: "Asaka tuman yoshlar kichik sanoati",
     address: "Jizzax viloyati, Sh.Rashidov tumani",
     logo: "/adm-logo.svg",
-    position: [40.145, 67.875],
+    position: [40.66658135655309, 72.27242718391031],
   },
 ];
 
@@ -132,15 +132,16 @@ const Companies = () => {
                 }
               >
                 <div className="location-logo">
-                  {location.id === 2 ? (
+                  {/* {location.id === 2 ? (
                     <img
                       src={comp_logo}
                       alt="ROODELL logo"
                       className="roodell-logo"
                     />
-                  ) : (
+                  ) :
+                   (
                     <img src={comp_logo} alt="ADM logo" className="adm-logo" />
-                  )}
+                  )} */}
                 </div>
                 <div className="location-info">
                   <h3>{location.name}</h3>

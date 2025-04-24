@@ -3,7 +3,7 @@ import "./home.scss";
 import { Link } from "react-router-dom";
 import jobs from "../../assets/jobs.png";
 import home_about from "../../assets/home_about.jpg";
-import comp_logo from "../../assets/comp_logo.png";
+// import comp_logo from "../../assets/comp_logo.png";
 import CountUp from "react-countup";
 import { useScrollTop } from "../../hooks/useScrollTop";
 
@@ -57,7 +57,6 @@ export const Home = () => {
           </div>
         </div>
       </div>
-
       <div className="home__about">
         <div className="container">
           <div className="home__about__wrapper">
@@ -88,7 +87,6 @@ export const Home = () => {
           </div>
         </div>
       </div>
-
       <div className="home__companies">
         <div className="container">
           <div className="home__companies__wrapper">
@@ -97,13 +95,17 @@ export const Home = () => {
               <Link to="/companies">Barchasi</Link>
             </div>
             <div className="home__companies__list">
-              {[1, 2, 3].map((_, i) => (
+              {[
+                { name: "Asaka textile", location: "Asaka tumani" },
+                { name: "Asaka davr butlovchi MChJ", location: "Asaka tumani" },
+                { name: "Asaka Akfa va Mebellar", location: "Asaka tumani" },
+              ].map((company, i) => (
                 <div className="home__companies__item" key={i}>
                   <div className="home__companies__item__wrapper">
-                    <img src={comp_logo} alt="Company logo" />
+                    {/* <img src={comp_logo} alt="Company logo" /> */}
                     <div className="home__companies__item__content">
-                      <p>ADM Electrics</p>
-                      <p>Andijon viloyati</p>
+                      <p>{company.name}</p>
+                      <p>{company.location}</p>
                     </div>
                   </div>
                   <button>Bo'sh ish o'rinlari</button>
