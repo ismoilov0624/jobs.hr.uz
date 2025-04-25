@@ -162,6 +162,7 @@ $breakpoint-large: 992px;
 }
 
 .info-card {
+  overflow: hidden;
   background-color: #fff;
   border: 1px solid $border-color;
   border-radius: 8px;
@@ -241,6 +242,7 @@ $breakpoint-large: 992px;
 }
 
 .personal-info-card {
+  overflow: hidden;
   background-color: #f9f9f9;
   border: 1px solid $border-color;
   border-radius: 8px;
@@ -407,5 +409,50 @@ $breakpoint-large: 992px;
 
   &:hover {
     background-color: $hover-accent;
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 2rem;
+
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+    th,
+    td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    th {
+      background-color: #f7f7f7;
+      font-weight: 600;
+      color: #444;
+      text-transform: uppercase;
+    }
+
+    td {
+      font-weight: 400;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    @media (max-width: 768px) {
+      th,
+      td {
+        padding: 0.6rem;
+      }
+    }
   }
 }
