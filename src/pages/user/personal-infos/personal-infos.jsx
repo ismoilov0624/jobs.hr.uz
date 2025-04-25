@@ -4,6 +4,13 @@ import "jspdf-autotable";
 import "./personal-infos.scss";
 
 const PersonalInfos = () => {
+  // const { data, isLoading } = useGetInfos();
+  // const navigate = useNavigate();
+
+  // const exit = () => {
+  //   Cookies.remove("user_token");
+  //   navigate("/", { replace: true });
+  // };
   const [activeTab, setActiveTab] = useState({
     education: 0,
     work: 0,

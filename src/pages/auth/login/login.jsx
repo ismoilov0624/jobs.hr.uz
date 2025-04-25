@@ -4,6 +4,8 @@ import { useLogin } from "./service/useLogin.js";
 import { saveState } from "../../../config/storage.js";
 import Cookies from "js-cookie";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./login.scss";
 
 export const Login = () => {
@@ -23,6 +25,29 @@ export const Login = () => {
         Cookies.set("user_token", res.accessToken, { expires: 1 });
         saveState("user", res.user);
         navigate("/", { replace: true });
+
+        toast.success("Login successful! Welcome back", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      },
+      onError: (error) => {
+        const errorMessage =
+          error?.response?.data?.message ||
+          "Login failed! Please check your credentials.";
+
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       },
     });
     reset();
@@ -31,7 +56,7 @@ export const Login = () => {
   return (
     <div className="login-container">
       <Link to="/" className="home-link">
-        🏠 Bosh sahifa
+        Bosh sahifa
       </Link>
 
       <form onSubmit={handleSubmit(submit)} className="login-form">

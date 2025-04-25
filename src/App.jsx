@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import PersonalInfos from "./pages/user/personal-infos/personal-infos";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   useEffect(() => {
@@ -24,22 +25,25 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="jobs" element={<Jobs />} />
-        <Route path="companies" element={<Companies />} />
-        <Route path="profile" element={<UserLayout />}>
-          <Route index element={<Overview />} />
-          <Route path="personal-infos" element={<PersonalInfos />} />
-          <Route path="edit-profile" element={<EditProfile />} />
+    <>
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="jobs" element={<Jobs />} />
+          <Route path="companies" element={<Companies />} />
+          <Route path="profile" element={<UserLayout />}>
+            <Route index element={<Overview />} />
+            <Route path="personal-infos" element={<PersonalInfos />} />
+            <Route path="edit-profile" element={<EditProfile />} />
+          </Route>
         </Route>
-      </Route>
 
-      <Route path="signup" element={<Signup />} />
-      <Route path="login" element={<Login />} />
-    </Routes>
+        <Route path="signup" element={<Signup />} />
+        <Route path="login" element={<Login />} />
+      </Routes>
+    </>
   );
 }
 

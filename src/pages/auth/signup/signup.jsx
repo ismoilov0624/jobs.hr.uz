@@ -4,8 +4,8 @@ import { useSignup } from "../signup/service/mutation/useSignup";
 import { saveState } from "../../../config/storage.js";
 import Cookies from "js-cookie";
 import { useNavigate, Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify"; // Import both toast and ToastContainer
-import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./signup.scss";
 
 export const Signup = () => {
@@ -27,29 +27,32 @@ export const Signup = () => {
         saveState("user", res.user);
 
         // Show success toast
-        // toast.success("Registration successful! Welcome!", {
-        //   position: "top-right",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        // });
+        toast.success("Registration successful! Welcome!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
 
         // Navigate to login page
         navigate("/login", { replace: true });
       },
-      // onError: (error) => {
-      //   // Show error toast
-      //   toast.error("Registration failed! Please try again.", {
-      //     position: "top-right",
-      //     autoClose: 5000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //   });
-      // },
+      onError: (error) => {
+        const errorMessage =
+          error?.response?.data?.message ||
+          "Registration failed! Please try again.";
+
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      },
     });
     reset();
   };
@@ -57,7 +60,7 @@ export const Signup = () => {
   return (
     <div className="signup-container">
       <Link to="/" className="home-link">
-        🏠 Bosh sahifa
+        Bosh sahifa
       </Link>
 
       <form onSubmit={handleSubmit(submit)} className="signup-form">
@@ -73,16 +76,16 @@ export const Signup = () => {
 
         <div>
           <input
-            {...register("middleName")}
-            placeholder="Otasining ismi"
+            {...register("lastName")}
+            placeholder="Familiya"
             className="input"
           />
         </div>
 
         <div>
           <input
-            {...register("lastName")}
-            placeholder="Familiya"
+            {...register("middleName")}
+            placeholder="Otasining ismi"
             className="input"
           />
         </div>
@@ -118,9 +121,6 @@ export const Signup = () => {
           Ro'yxatdan o'tish
         </button>
       </form>
-
-      {/* Toast container to show notifications */}
-      <ToastContainer />
     </div>
   );
 };
