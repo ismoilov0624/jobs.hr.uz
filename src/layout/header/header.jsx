@@ -24,9 +24,11 @@ export const Header = () => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <div className="header__logo">
-                <img className="nav__logo" src={logo} alt="Logo" />
-              </div>
+              <Link to="/">
+                <div className="header__logo">
+                  <img className="nav__logo" src={logo} alt="Logo" />
+                </div>
+              </Link>
               <nav className="header__nav">
                 <Link to="/" className="header__link">
                   {t("home")}
