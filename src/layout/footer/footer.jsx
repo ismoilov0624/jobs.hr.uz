@@ -27,7 +27,7 @@ export const Footer = () => {
             <span>info@jobshr.uz</span>
           </div>
           <div className="footer__contactItem">
-            <span>+998 90 123 45 67</span>
+            <span>+998 91 063 70 08</span>
           </div>
           <div className="footer__contactItem">
             <span>Andijon, Uzbekistan</span>

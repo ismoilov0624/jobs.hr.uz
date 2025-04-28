@@ -43,7 +43,7 @@ export const Header = () => {
                   {t("companies")}
                 </Link>
                 <a
-                  href="https://t.me/HR_JOBS_UZB"
+                  href="https://t.me/jobs_hr_uz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="header__link"
