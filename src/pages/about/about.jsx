@@ -3,9 +3,21 @@ import "./about.scss";
 import home_about from "../../assets/home_about.jpg";
 import CountUp from "react-countup";
 import { useScrollTop } from "../../hooks/useScrollTop";
+import suitcase from "../../assets/suitcase.svg";
+import comp from "../../assets/comp.svg";
+import worker from "../../assets/worker.svg";
+import check from "../../assets/check.svg";
 
 export const About = () => {
   useScrollTop(0);
+
+  const stats = [
+    { count: 4, label: "Bo'sh ish o'rinlari", img: suitcase },
+    { count: 6, label: "Tashkilotlar", img: comp },
+    { count: 39934, label: "Nomzodlar", img: worker },
+    { count: 131, label: "Barcha ish joylari", img: check },
+  ];
+
   return (
     <>
       <div className="home__about">
@@ -40,30 +52,21 @@ export const About = () => {
       </div>
       <div className="container">
         <div className="home__stats">
-          <div className="home__stat-box">
-            <h2>
-              <CountUp end={4} duration={2} />
-            </h2>
-            <p>Bo'sh ish o'rinlari</p>
-          </div>
-          <div className="home__stat-box">
-            <h2>
-              <CountUp end={6} duration={2} />
-            </h2>
-            <p>Tashkilotlar</p>
-          </div>
-          <div className="home__stat-box">
-            <h2>
-              <CountUp end={39934} duration={2.5} separator=" " />
-            </h2>
-            <p>Nomzodlar</p>
-          </div>
-          <div className="home__stat-box">
-            <h2>
-              <CountUp end={131} duration={2} />
-            </h2>
-            <p>Barcha ish joylari</p>
-          </div>
+          {stats.map((item, index) => (
+            <div className="home__stat-box" key={index}>
+              <img src={item.img} alt="Icon" />
+              <div className="home__stat-text">
+                <h2>
+                  <CountUp
+                    end={item.count}
+                    duration={2}
+                    separator={item.separator || ""}
+                  />
+                </h2>
+                <p>{item.label}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>

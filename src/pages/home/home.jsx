@@ -3,15 +3,32 @@ import "./home.scss";
 import { Link } from "react-router-dom";
 import jobs from "../../assets/jobs.png";
 import home_about from "../../assets/home_about.jpg";
-// import comp_logo from "../../assets/comp_logo.png";
 import CountUp from "react-countup";
 import { useScrollTop } from "../../hooks/useScrollTop";
+import suitcase from "../../assets/suitcase.svg";
+import comp from "../../assets/comp.svg";
+import worker from "../../assets/worker.svg";
+import check from "../../assets/check.svg";
 
 export const Home = () => {
   useScrollTop(0);
+
+  const stats = [
+    { count: 4, label: "Bo'sh ish o'rinlari", img: suitcase },
+    { count: 6, label: "Tashkilotlar", img: comp },
+    { count: 39934, label: "Nomzodlar", img: worker },
+    { count: 131, label: "Barcha ish joylari", img: check },
+  ];
+
+  const companies = [
+    { name: "Asaka textile", location: "Asaka tumani" },
+    { name: "Asaka davr butlovchi MChJ", location: "Asaka tumani" },
+    { name: "Asaka Akfa va Mebellar", location: "Asaka tumani" },
+  ];
+
   return (
     <div className="home">
-      <div className="home__hero">
+      <section className="home__hero">
         <div className="container">
           <div className="home__wrapper">
             <div className="home__text">
@@ -21,43 +38,32 @@ export const Home = () => {
                 E'lonlarni ko‘rish
               </Link>
             </div>
-
             <div className="home__image">
-              <img src={jobs} alt="" />
+              <img src={jobs} alt="Jobs illustration" />
             </div>
           </div>
-        </div>
 
-        <div className="container">
           <div className="home__stats">
-            <div className="home__stat-box">
-              <h2>
-                <CountUp end={4} duration={2} />
-              </h2>
-              <p>Bo'sh ish o'rinlari</p>
-            </div>
-            <div className="home__stat-box">
-              <h2>
-                <CountUp end={6} duration={2} />
-              </h2>
-              <p>Tashkilotlar</p>
-            </div>
-            <div className="home__stat-box">
-              <h2>
-                <CountUp end={39934} duration={2.5} separator=" " />
-              </h2>
-              <p>Nomzodlar</p>
-            </div>
-            <div className="home__stat-box">
-              <h2>
-                <CountUp end={131} duration={2} />
-              </h2>
-              <p>Barcha ish joylari</p>
-            </div>
+            {stats.map((item, index) => (
+              <div className="home__stat-box" key={index}>
+                <img src={item.img} alt="Icon" />
+                <div className="home__stat-text">
+                  <h2>
+                    <CountUp
+                      end={item.count}
+                      duration={2}
+                      separator={item.separator || ""}
+                    />
+                  </h2>
+                  <p>{item.label}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
-      <div className="home__about">
+      </section>
+
+      <section className="home__about">
         <div className="container">
           <div className="home__about__wrapper">
             <div className="home__about__content">
@@ -78,7 +84,6 @@ export const Home = () => {
                 tashkilotlar uchun ham qulay boshqaruv tizimini taklif etadi.
                 E'lonlarni qo‘shish, nomzodlarni saralash va aloqa o‘rnatish
                 jarayonlari ilg‘or texnologiyalar orqali yengillashtirilgan.
-                <br />
               </p>
             </div>
             <div className="home__about__img">
@@ -86,23 +91,20 @@ export const Home = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="home__companies">
+      </section>
+
+      <section className="home__companies">
         <div className="container">
           <div className="home__companies__wrapper">
             <div className="home__companies__header">
               <p>Faol tashkilotlar</p>
               <Link to="/companies">Barchasi</Link>
             </div>
+
             <div className="home__companies__list">
-              {[
-                { name: "Asaka textile", location: "Asaka tumani" },
-                { name: "Asaka davr butlovchi MChJ", location: "Asaka tumani" },
-                { name: "Asaka Akfa va Mebellar", location: "Asaka tumani" },
-              ].map((company, i) => (
-                <div className="home__companies__item" key={i}>
+              {companies.map((company, index) => (
+                <div className="home__companies__item" key={index}>
                   <div className="home__companies__item__wrapper">
-                    {/* <img src={comp_logo} alt="Company logo" /> */}
                     <div className="home__companies__item__content">
                       <p>{company.name}</p>
                       <p>{company.location}</p>
@@ -114,7 +116,7 @@ export const Home = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
