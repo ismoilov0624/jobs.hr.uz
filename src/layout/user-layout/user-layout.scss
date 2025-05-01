@@ -47,7 +47,11 @@
     background-color: #4d8de6;
     padding: 60px 20px 20px;
     transition: transform 0.3s ease;
-    z-index: 99;
+    z-index: 9;
+
+    &.active {
+      z-index: 999;
+    }
 
     a {
       display: block;
