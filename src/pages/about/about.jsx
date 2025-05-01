@@ -20,10 +20,10 @@ export const About = () => {
 
   return (
     <>
-      <div className="home__about">
+      <div className="about">
         <div className="container">
-          <div className="home__about__wrapper">
-            <div className="home__about__content">
+          <div className="about__wrapper">
+            <div className="about__content">
               <h2>Jobs HR haqida</h2>
               <h3>
                 Jobs HR — bu ish izlovchilar va ish beruvchilarni samarali
@@ -44,12 +44,13 @@ export const About = () => {
                 <br />
               </p>
             </div>
-            <div className="home__about__img">
+            <div className="about__img">
               <img src={home_about} alt="Jobs HR haqida" />
             </div>
           </div>
         </div>
       </div>
+
       <div className="container">
         <div className="home__stats">
           {stats.map((item, index) => (

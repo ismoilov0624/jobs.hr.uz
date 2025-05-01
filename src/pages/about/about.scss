@@ -20,12 +20,12 @@
   }
 }
 
-.home__about {
+.about {
   margin-top: 103px;
   background-color: #0056b3;
   color: white;
 
-  .home__about__wrapper {
+  .about__wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,7 +38,7 @@
       text-align: center;
     }
 
-    .home__about__content {
+    .about__content {
       flex: 1;
       max-width: 50%;
       animation: fadeInLeft 1s ease forwards;
@@ -66,7 +66,7 @@
       }
     }
 
-    .home__about__img {
+    .about__img {
       flex: 1;
       animation: fadeInUp 1s ease forwards;
       animation-delay: 0.6s;
