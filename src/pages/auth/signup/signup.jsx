@@ -84,25 +84,8 @@ export const Signup = () => {
 
         <div>
           <input
-            {...register("middleName")}
-            placeholder="Otasining ismi"
-            className="input"
-          />
-        </div>
-
-        <div>
-          <input
             {...register("phone")}
             placeholder="Telefon raqam"
-            className="input"
-          />
-        </div>
-
-        <div>
-          <input
-            {...register("email")}
-            placeholder="Elektron pochta"
-            type="email"
             className="input"
           />
         </div>
