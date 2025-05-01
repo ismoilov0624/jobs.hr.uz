@@ -1,4 +1,5 @@
 .user-layout {
+  margin-top: 103px;
   display: flex;
   min-height: 100vh;
   position: relative;
@@ -7,7 +8,7 @@
     display: none;
     position: absolute;
     left: 20px;
-    z-index: 9999;
+    z-index: 2;
     background: transparent;
     border: none;
     font-size: 26px;
@@ -24,12 +25,29 @@
     }
   }
 
+  &__close-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 28px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 100;
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+
   &__sidebar {
     width: 250px;
     background-color: #4d8de6;
     padding: 60px 20px 20px;
     transition: transform 0.3s ease;
-    z-index: 1000;
+    z-index: 99;
 
     a {
       display: block;
@@ -68,7 +86,6 @@
   }
 
   &__content {
-    // background-color: #fafafa;
     flex-grow: 1;
     padding: 30px;
     padding-right: 10px;

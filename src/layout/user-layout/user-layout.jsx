@@ -36,6 +36,10 @@ export const UserLayout = () => {
       </button>
 
       <div className={`user-layout__sidebar ${isOpen ? "active" : ""}`}>
+        <button className="user-layout__close-btn" onClick={closeSidebar}>
+          ✕
+        </button>
+
         <Link
           to="/profile"
           onClick={closeSidebar}
@@ -63,6 +67,7 @@ export const UserLayout = () => {
         >
           Profilni tahrirlash
         </Link>
+
         <Link to="">Profildan chiqish</Link>
       </div>
 
