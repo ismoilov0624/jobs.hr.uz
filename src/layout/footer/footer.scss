@@ -118,4 +118,11 @@
       align-items: center;
     }
   }
+
+  &__qrcode {
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
 }

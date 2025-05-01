@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import telegram from "../../assets/telegram.svg";
 import facebook from "../../assets/facebook.svg";
+import qrcode from "../../assets/qrcode.png";
 
 export const Footer = () => {
   return (
@@ -51,6 +52,9 @@ export const Footer = () => {
             >
               <img src={facebook} alt="Facebook" />
             </a>
+            <div className="footer__qrcode">
+              <img src={qrcode} alt="QR code" />
+            </div>
           </div>
         </div>
       </div>
