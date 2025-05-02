@@ -11,6 +11,9 @@
     color: #6b7280;
 
     .breadcrumb-item {
+      color: #0056b3;
+      cursor: pointer;
+      font-weight: 500;
       &.active {
         color: #333;
         font-weight: 500;

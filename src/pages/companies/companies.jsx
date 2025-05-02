@@ -116,7 +116,11 @@ const Companies = () => {
     <div className="container">
       <div className="map-container">
         <div className="breadcrumb">
-          <Link to="/">Bosh sahifa</Link> / <span>Tashkilotlar</span>
+          <Link className="breadcrumb-item" to="/">
+            Bosh sahifa
+          </Link>
+          <span className="breadcrumb-separator">/</span>
+          <span className="breadcrumb-item active">Ish joyi</span>
         </div>
 
         <div className="map-content">

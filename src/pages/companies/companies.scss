@@ -12,6 +12,19 @@
     font-size: 14px;
     border-bottom: 1px solid #eee;
 
+    .breadcrumb-item {
+      color: #0056b3;
+      cursor: pointer;
+      font-weight: 500;
+      &.active {
+        color: #333;
+        font-weight: 500;
+      }
+    }
+    .breadcrumb-separator {
+      margin: 0 8px;
+      color: #d1d5db;
+    }
     span:last-child {
       color: #333;
     }
