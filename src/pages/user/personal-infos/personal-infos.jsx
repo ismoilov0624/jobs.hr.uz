@@ -135,7 +135,7 @@ const PersonalInfos = () => {
           </div>
         </div>
         <div className="profile-details">
-          <h1 className="profile-name">Ism Familiya</h1>
+          <h1 className="profile-name">Ism Familiya Otasining ismi</h1>
           <p className="profile-status">Ishsiz</p>
         </div>
         <div className="edit-profile-button">
