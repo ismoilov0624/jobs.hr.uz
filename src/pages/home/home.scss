@@ -22,6 +22,10 @@
 
 .home {
   margin-top: 103px;
+  @media (max-width: 430px) {
+    margin-top: 80px;
+  }
+
   &__hero {
     background-color: #fafafa;
     padding: 3rem 0;

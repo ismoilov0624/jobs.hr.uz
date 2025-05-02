@@ -25,6 +25,10 @@
   background-color: #0056b3;
   color: white;
 
+  @media (max-width: 430px) {
+    margin-top: 80px;
+  }
+
   .about__wrapper {
     display: flex;
     justify-content: space-between;

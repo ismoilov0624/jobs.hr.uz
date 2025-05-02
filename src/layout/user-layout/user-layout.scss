@@ -3,6 +3,9 @@
   display: flex;
   min-height: 100vh;
   position: relative;
+  @media (max-width: 430px) {
+    margin-top: 80px;
+  }
 
   &__burger {
     display: none;
