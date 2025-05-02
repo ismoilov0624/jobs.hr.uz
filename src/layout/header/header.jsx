@@ -86,9 +86,14 @@ export const Header = () => {
                 </ul>
               )}
             </div>
-            <Link to="/profile" className="header__profile">
-              <img src={prof} alt="Profile" />
-            </Link>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                `header__profile ${isActive ? "active" : ""}`
+              }
+            >
+              {t("myprofile")}
+            </NavLink>
             <div className="header__auth">
               <NavLink
                 to="/signup"
