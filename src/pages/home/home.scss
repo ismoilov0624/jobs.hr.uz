@@ -291,7 +291,10 @@
 .home__btn__wrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
+
+  @media (max-width: 1188px) {
+    justify-content: center;
+  }
 }
