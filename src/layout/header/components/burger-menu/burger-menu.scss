@@ -13,6 +13,9 @@
   @media (min-width: 950px) {
     display: none;
   }
+  @media (max-width: 430px) {
+    top: 30px;
+  }
 }
 
 .bm-burger-bars {

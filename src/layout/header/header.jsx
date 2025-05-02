@@ -62,14 +62,6 @@ export const Header = () => {
               >
                 {t("companies")}
               </NavLink>
-              <a
-                href="https://t.me/jobs_hr_uz"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="header__link"
-              >
-                {t("telegram_channel")}
-              </a>
             </nav>
           </div>
 

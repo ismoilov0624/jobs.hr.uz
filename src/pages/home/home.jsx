@@ -34,9 +34,19 @@ export const Home = () => {
             <div className="home__text">
               <h1>Jobs HR ish e'lonlari</h1>
               <p>Eng so‘nggi va ishonchli ish e'lonlarini shu yerda toping.</p>
-              <Link className="home__btn" to="/jobs">
-                E'lonlarni ko‘rish
-              </Link>
+              <div className="home__btn__wrapper">
+                <Link className="home__btn" to="/jobs">
+                  E'lonlarni ko‘rish
+                </Link>
+                <a
+                  href="https://t.me/jobs_hr_uz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="home__btn"
+                >
+                  Telegram kanal
+                </a>
+              </div>
             </div>
             <div className="home__image">
               <img src={jobs} alt="Jobs illustration" />
