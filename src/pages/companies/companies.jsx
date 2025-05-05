@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import {
   MapContainer,
@@ -120,7 +118,7 @@ const Companies = () => {
             Bosh sahifa
           </Link>
           <span className="breadcrumb-separator">/</span>
-          <span className="breadcrumb-item active">Ish joyi</span>
+          <span className="breadcrumb-item active">Tashkilotlar</span>
         </div>
 
         <div className="map-content">

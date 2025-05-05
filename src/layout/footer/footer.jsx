@@ -25,6 +25,11 @@ export const Footer = () => {
         <div className="footer__contact">
           <p>Kontaktlar</p>
           <div className="footer__contactItem">
+            <span className="footer__contactTitle">
+              Aloqa va hamkorlik uchun:
+            </span>
+          </div>
+          <div className="footer__contactItem">
             <span>info@jobshr.uz</span>
           </div>
           <div className="footer__contactItem">

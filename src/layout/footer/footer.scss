@@ -33,7 +33,7 @@
 
     p {
       font-size: 20px;
-      color: #0056b3;
+      color: #333;
       font-weight: 600;
       margin-bottom: 0.5rem;
     }
@@ -42,11 +42,6 @@
       font-size: 15px;
       text-decoration: none;
       color: #333;
-      transition: color 0.3s;
-
-      &:hover {
-        color: #0056b3;
-      }
     }
 
     @media (max-width: 768px) {
@@ -61,7 +56,7 @@
 
     p {
       font-size: 20px;
-      color: #0056b3;
+      color: #333;
       font-weight: 600;
       margin-bottom: 0.5rem;
     }
@@ -89,7 +84,7 @@
 
     p {
       font-size: 20px;
-      color: #0056b3;
+      color: #333;
       font-weight: 600;
       margin-bottom: 0.5rem;
     }

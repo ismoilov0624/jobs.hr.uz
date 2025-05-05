@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "./user-layout.scss";
+import { useScrollTop } from "../../hooks/useScrollTop";
 
 export const UserLayout = () => {
+  useScrollTop(0);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
