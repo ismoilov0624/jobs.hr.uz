@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./home.scss";
 import { Link } from "react-router-dom";
-import hero1 from "../../assets/hero1.png";
-import hero2 from "../../assets/hero2.webp";
-import hero3 from "../../assets/hero3.webp";
+import hero from "../../assets/hero.png";
 import home_about from "../../assets/home_about.jpg";
 import CountUp from "react-countup";
 import { useScrollTop } from "../../hooks/useScrollTop";
@@ -11,16 +9,6 @@ import suitcase from "../../assets/suitcase.svg";
 import comp from "../../assets/comp.svg";
 import worker from "../../assets/worker.svg";
 import check from "../../assets/check.svg";
-
-// ! Agar sizda companies array mavjud bo'lmasa, vaqtinchalik uni aniqlab turing
-const companies = [
-  { name: "Asaka textile", location: "Andijon viloyati, Asaka tumani" },
-  { name: "Akfa eshik romlari", location: "Andijon viloyati, Asaka tumani" },
-  {
-    name: "Asaka davr butlovchi MChJ",
-    location: "Andijon viloyati, Asaka tumani",
-  },
-];
 
 export const Home = () => {
   useScrollTop(0);
@@ -32,21 +20,11 @@ export const Home = () => {
     { count: 131, label: "Barcha ish joylari", img: check },
   ];
 
-  const heroImages = [hero1, hero2, hero3];
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [fade, setFade] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-        setFade(true);
-      }, 500);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const companies = [
+    { name: "Asaka textile", location: "Asaka tumani" },
+    { name: "Asaka davr butlovchi MChJ", location: "Asaka tumani" },
+    { name: "Asaka Akfa va Mebellar", location: "Asaka tumani" },
+  ];
 
   return (
     <div className="home">
@@ -71,11 +49,7 @@ export const Home = () => {
               </div>
             </div>
             <div className="home__image">
-              <img
-                src={heroImages[currentIndex]}
-                alt="Hero"
-                className={`fade-image ${fade ? "visible" : "hidden"}`}
-              />
+              <img src={hero} alt="Jobs illustration" />
             </div>
           </div>
 
@@ -85,7 +59,11 @@ export const Home = () => {
                 <img src={item.img} alt="Icon" />
                 <div className="home__stat-text">
                   <h2>
-                    <CountUp end={item.count} duration={2} />
+                    <CountUp
+                      end={item.count}
+                      duration={2}
+                      separator={item.separator || ""}
+                    />
                   </h2>
                   <p>{item.label}</p>
                 </div>
