@@ -10,9 +10,11 @@ export const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer__container">
-        <div className="footer__logo">
-          <img src={logo} alt="Jobs HR logo" />
-        </div>
+        <Link to="/">
+          <div className="header__logo">
+            <img className="nav__logo" src={logo} alt="Logo" />
+          </div>
+        </Link>
 
         <div className="footer__links">
           <p>Jobs HR</p>

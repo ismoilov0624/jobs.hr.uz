@@ -11,6 +11,7 @@ import "./companies.scss";
 import L from "leaflet";
 import { Link } from "react-router-dom";
 import comp_logo from "../../assets/comp_logo.png";
+import comp from "../../assets/comp.svg";
 import { useScrollTop } from "../../hooks/useScrollTop";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -134,16 +135,15 @@ const Companies = () => {
                 }
               >
                 <div className="location-logo">
-                  {/* {location.id === 2 ? (
+                  {location.id === 2 ? (
                     <img
-                      src={comp_logo}
+                      src={comp}
                       alt="ROODELL logo"
                       className="roodell-logo"
                     />
-                  ) :
-                   (
-                    <img src={comp_logo} alt="ADM logo" className="adm-logo" />
-                  )} */}
+                  ) : (
+                    <img src={comp} alt="ADM logo" className="adm-logo" />
+                  )}
                 </div>
                 <div className="location-info">
                   <h3>{location.name}</h3>
