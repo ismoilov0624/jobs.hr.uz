@@ -22,8 +22,12 @@ export const Home = () => {
 
   const companies = [
     { name: "Asaka textile", location: "Asaka tumani", img: comp },
-    { name: "Asaka davr butlovchi MChJ", location: "Asaka tumani", img: comp },
-    { name: "Asaka Akfa va Mebellar", location: "Asaka tumani", img: comp },
+    {
+      name: "Farg‘ona Neftni Qayta Ishlash Zavodi",
+      location: "Farg‘ona viloyati, Farg‘ona shahri",
+      img: comp,
+    },
+    { name: "Namangan Logistics", location: "Namangan shahri", img: comp },
   ];
 
   return (
