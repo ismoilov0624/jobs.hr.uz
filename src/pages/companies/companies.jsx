@@ -67,15 +67,47 @@ const locations = [
     logo: "/adm-logo.svg",
     position: [40.67670250558059, 72.23352119925285],
   },
+
+  // Qo‘shilgan Farg‘ona viloyati tashkilotlari:
   {
     id: 5,
+    name: "Farg‘ona Neftni Qayta Ishlash Zavodi",
+    address: "Farg‘ona viloyati, Farg‘ona shahri",
+    logo: "/adm-logo.svg",
+    position: [40.388, 71.786], // taxminiy koordinata
+  },
+  {
+    id: 6,
+    name: "Qo‘qon Superfosfat Zavodi",
+    address: "Farg‘ona viloyati, Qo‘qon shahri",
+    logo: "/adm-logo.svg",
+    position: [40.528, 70.942], // taxminiy koordinata
+  },
+  {
+    id: 7,
+    name: "Farg‘ona Azot",
+    address: "Farg‘ona viloyati, Farg‘ona shahri",
+    logo: "/adm-logo.svg",
+    position: [40.39, 71.781], // taxminiy koordinata
+  },
+  {
+    id: 8,
+    name: "Qo‘qon Mebel",
+    address: "Farg‘ona viloyati, Qo‘qon shahri",
+    logo: "/adm-logo.svg",
+    position: [40.525, 70.943], // taxminiy koordinata
+  },
+
+  // Davomi (avvalgi Andijon tashkilotlari):
+  {
+    id: 9,
     name: "Asaka yog'",
     address: "Andijon viloyati",
     logo: "/adm-logo.svg",
     position: [40.647518508252155, 72.25439077596566],
   },
   {
-    id: 6,
+    id: 10,
     name: "Asaka tuman yoshlar kichik sanoati",
     address: "Andijon viloyati, Asaka tumani",
     logo: "/adm-logo.svg",
