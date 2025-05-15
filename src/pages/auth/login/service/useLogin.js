@@ -4,6 +4,6 @@ import { request } from "../../../../config/request";
 export const useLogin = () => {
   return useMutation({
     mutationFn: (data) =>
-      request.post("/users/login", data).then((res) => res.data),
+      request.post("/auth/login", data).then((res) => res.data),
   });
 };

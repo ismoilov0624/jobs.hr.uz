@@ -1,0 +1,151 @@
+.map-container {
+  margin-top: 103px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 90vh;
+}
+@media (max-width: 430px) {
+  .map-container {
+    margin-top: 80px;
+  }
+}
+.map-container .breadcrumb {
+  padding: 15px;
+  background-color: #fff;
+  color: #888;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+.map-container .breadcrumb .breadcrumb-item {
+  color: #0056b3;
+  cursor: pointer;
+  font-weight: 500;
+}
+.map-container .breadcrumb .breadcrumb-item.active {
+  color: #333;
+  font-weight: 500;
+}
+.map-container .breadcrumb .breadcrumb-separator {
+  margin: 0 8px;
+  color: #d1d5db;
+}
+.map-container .breadcrumb span:last-child {
+  color: #333;
+}
+.map-container .map-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - 50px);
+}
+.map-container .location-list {
+  width: 350px;
+  overflow-y: auto;
+  border-right: 1px solid #eee;
+}
+.map-container .location-list .location-item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.map-container .location-list .location-item:hover {
+  background-color: #f9f9f9;
+}
+.map-container .location-list .location-item.active {
+  background-color: #f4f4f4;
+  border-left: 4px solid #003f8a;
+}
+.map-container .location-list .location-item .location-logo {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-container .location-list .location-item .location-logo .adm-logo {
+  width: 40px;
+  height: 40px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.map-container .location-list .location-item .location-logo .roodell-logo {
+  width: 40px;
+  height: 40px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.map-container .location-list .location-item .location-info {
+  flex: 1;
+  margin-left: 15px;
+}
+.map-container .location-list .location-item .location-info h3 {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.map-container .location-list .location-item .location-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #888;
+}
+.map-container .location-list .location-item .external-link {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-container .location-list .location-item .external-link svg {
+  transition: transform 0.2s;
+}
+.map-container .location-list .location-item .external-link:hover svg {
+  transform: scale(1.1);
+}
+.map-container .map-view {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+.map-container .map-view .leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+.map-container .map-view .leaflet-control-zoom {
+  margin-top: 60px;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.map-container .map-view .leaflet-control-zoom a {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.map-container .map-view .leaflet-control-zoom a:first-child {
+  border-bottom: 1px solid #eee;
+}
+.map-container .map-view .leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3px 8px;
+  font-size: 11px;
+}
+
+@media (max-width: 600px) {
+  .map-content {
+    flex-direction: column-reverse;
+  }
+  .location-list {
+    width: 100% !important;
+    max-height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+  .map-view {
+    height: 40vh;
+  }
+}/*# sourceMappingURL=companies.css.map */

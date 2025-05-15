@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSignup } from "../signup/service/mutation/useSignup";
-import { saveState } from "../../../config/storage.js";
-import Cookies from "js-cookie";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,47 +12,55 @@ export const Signup = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm();
 
   const { mutate, isPending } = useSignup();
   const navigate = useNavigate();
+  const password = watch("password");
+
+  const [phone, setPhone] = useState("+");
 
   const submit = (data) => {
-    mutate(data, {
-      onSuccess: (res) => {
-        // Set user token and save user data in local storage
-        Cookies.set("user_token", res.accessToken, { expires: 1 });
-        saveState("user", res.user);
+    const cleanPhone = phone.replace(/^\+/, ""); // + belgisi olib tashlanadi
 
-        // Show success toast
-        toast.success("Registration successful! Welcome!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+    if (!cleanPhone) {
+      toast.error("Telefon raqam majburiy!", { position: "top-right" });
+      return;
+    }
 
-        // Navigate to login page
-        navigate("/login", { replace: true });
+    mutate(
+      {
+        phone: cleanPhone,
+        password: data.password,
       },
-      onError: (error) => {
-        const errorMessage =
-          error?.response?.data?.message ||
-          "Registration failed! Please try again.";
+      {
+        onSuccess: () => {
+          navigate("/verify", {
+            state: { phone: cleanPhone },
+          });
 
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      },
-    });
-    reset();
+          toast.success("Kod yuborildi. Telegram orqali tasdiqlang!", {
+            position: "top-right",
+            autoClose: 5000,
+          });
+
+          reset();
+          setPhone("+");
+        },
+        onError: (error) => {
+          const rawMessage = error?.response?.data?.error?.message;
+          const friendlyMessage = rawMessage?.includes("already exists")
+            ? "Bu telefon raqam bilan foydalanuvchi allaqachon ro'yxatdan o'tgan!"
+            : rawMessage || "Ro'yxatdan o'tishda xatolik yuz berdi!";
+
+          toast.error(friendlyMessage, {
+            position: "top-right",
+            autoClose: 5000,
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -68,48 +74,63 @@ export const Signup = () => {
 
         <div>
           <input
-            {...register("firstName")}
-            placeholder="Ism"
-            className="input"
-          />
-        </div>
-
-        <div>
-          <input
-            {...register("lastName")}
-            placeholder="Familiya"
-            className="input"
-          />
-        </div>
-        <div>
-          <input
-            {...register("middleName")}
-            placeholder="Otasining ismi"
-            className="input"
-          />
-        </div>
-
-        <div>
-          <input
-            {...register("phone")}
+            value={phone}
+            onChange={(e) => {
+              const raw = e.target.value;
+              if (/^\+?\d*$/.test(raw)) {
+                setPhone(raw);
+              }
+            }}
             placeholder="Telefon raqam"
             className="input"
           />
+          {errors.phone && <p className="error">{errors.phone.message}</p>}
         </div>
 
         <div>
           <input
-            {...register("password")}
+            {...register("password", {
+              required: "Parol majburiy",
+              minLength: {
+                value: 6,
+                message: "Parol kamida 6 ta belgidan iborat bo'lishi kerak",
+              },
+            })}
             placeholder="Parol"
             type="password"
             className="input"
           />
-          {errors?.password && <p>{errors.password.message}</p>}
+          {errors.password && (
+            <p className="error">{errors.password.message}</p>
+          )}
         </div>
 
-        <button type="submit" className="submit-btn">
-          Ro'yxatdan o'tish
+        <div>
+          <input
+            {...register("repeatPassword", {
+              required: "Parolni qayta kiriting",
+              validate: (value) => value === password || "Parollar mos emas",
+            })}
+            placeholder="Parolni qayta kiriting"
+            type="password"
+            className="input"
+          />
+          {errors.repeatPassword && (
+            <p className="error">{errors.repeatPassword.message}</p>
+          )}
+        </div>
+
+        <button type="submit" className="submit-btn" disabled={isPending}>
+          {isPending ? "Yuklanmoqda..." : "Ro'yxatdan o'tish"}
         </button>
+
+        {/* Kirish sahifasiga link */}
+        <p className="redirect-text">
+          Allaqachon ro'yxatdan o'tganmisiz?{" "}
+          <Link to="/login" className="login-link">
+            Kirish
+          </Link>
+        </p>
       </form>
     </div>
   );

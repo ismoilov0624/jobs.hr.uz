@@ -1,0 +1,113 @@
+.verify-container {
+  min-height: 100vh;
+  padding: 1rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/src/assets/home_about.jpg") no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.verify-container .home-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.verify-container .home-link:hover {
+  color: #cbd5e1;
+}
+.verify-container .title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.verify-container p {
+  color: #f3f4f6;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+.verify-container p strong {
+  color: #ffffff;
+}
+.verify-container .telegram-link {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.verify-container .telegram-link .telegram-btn {
+  background-color: #229ed9;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.verify-container .telegram-link .telegram-btn:hover {
+  background-color: #1c92c7;
+  transform: scale(1.03);
+}
+.verify-container .telegram-link .telegram-btn:active {
+  transform: scale(1);
+}
+.verify-container .verify-form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+.verify-container .verify-form .input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background-color: #f3f4f6;
+  transition: all 0.2s ease;
+}
+.verify-container .verify-form .input:focus {
+  border-color: #3b82f6;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+.verify-container .verify-form .error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: -0.5rem;
+}
+.verify-container .verify-form .submit-btn {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.verify-container .verify-form .submit-btn:hover {
+  background-color: #1e40af;
+  transform: translateY(-2px);
+}
+.verify-container .verify-form .submit-btn:active {
+  transform: translateY(0);
+}/*# sourceMappingURL=verify.css.map */

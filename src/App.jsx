@@ -18,6 +18,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import PersonalInfos from "./pages/user/personal-infos/personal-infos";
 import { ToastContainer } from "react-toastify";
+import { Verify } from "./pages/auth/verify/verify";
 
 function App() {
   useEffect(() => {
@@ -41,6 +42,7 @@ function App() {
         </Route>
 
         <Route path="signup" element={<Signup />} />
+        <Route path="verify" element={<Verify />} />
         <Route path="login" element={<Login />} />
       </Routes>
     </>

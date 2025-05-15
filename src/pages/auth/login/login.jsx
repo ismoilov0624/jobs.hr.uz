@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLogin } from "./service/useLogin.js";
 import { saveState } from "../../../config/storage.js";
@@ -19,38 +19,47 @@ export const Login = () => {
   const { mutate, isPending } = useLogin();
   const navigate = useNavigate();
 
+  const [phone, setPhone] = useState("+");
+
   const submit = (data) => {
-    mutate(data, {
-      onSuccess: (res) => {
-        Cookies.set("user_token", res.accessToken, { expires: 1 });
-        saveState("user", res.user);
-        navigate("/", { replace: true });
+    const cleanPhone = phone.replace(/^\+/, "");
 
-        toast.success("Login successful! Welcome back", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      },
-      onError: (error) => {
-        const errorMessage =
-          error?.response?.data?.message ||
-          "Login failed! Please check your credentials.";
+    mutate(
+      { phone: cleanPhone, password: data.password },
+      {
+        onSuccess: (res) => {
+          Cookies.set("user_token", res.data.accessToken, { expires: 1 });
+          saveState("user", res.user);
+          navigate("/", { replace: true });
 
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      },
-    });
+          toast.success("Login successful! Welcome back", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        },
+        onError: (error) => {
+          const errorMessage =
+            error?.response?.data?.message ||
+            "Login failed! Please check your credentials.";
+
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        },
+      }
+    );
+
     reset();
+    setPhone("+");
   };
 
   return (
@@ -64,24 +73,39 @@ export const Login = () => {
 
         <div>
           <input
-            {...register("phone")}
+            value={phone}
+            onChange={(e) => {
+              const raw = e.target.value;
+              if (/^\+?\d*$/.test(raw)) {
+                setPhone(raw);
+              }
+            }}
             placeholder="Telefon raqam"
             className="input"
           />
+          {errors.phone && <p className="error">{errors.phone.message}</p>}
         </div>
 
         <div>
           <input
-            {...register("password")}
+            {...register("password", { required: "Parol majburiy" })}
             placeholder="Parol"
             type="password"
             className="input"
           />
+          {errors.password && (
+            <p className="error">{errors.password.message}</p>
+          )}
         </div>
 
-        <button type="submit" className="submit-btn">
-          Kirish
+        <button type="submit" className="submit-btn" disabled={isPending}>
+          {isPending ? "Yuklanmoqda..." : "Kirish"}
         </button>
+
+        {/* Ro'yxatdan o'tish sahifasiga yo'naltiruvchi link */}
+        <p className="signup-link">
+          Ro'yxatdan o'tmaganmisiz? <Link to="/signup">Ro'yxatdan o'tish</Link>
+        </p>
       </form>
     </div>
   );

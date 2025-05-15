@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { request } from "../../../../config/request";
+import { request } from "../../../../../config/request";
 
-export const useGetProducts = () => {
+export const useGetInfos = () => {
   return useQuery({
     queryKey: ["infos"],
-    queryFn: () => request.get("/infos").then((res) => res.data),
+    queryFn: () => request.get("/auth/protected").then((res) => res.data),
   });
 };

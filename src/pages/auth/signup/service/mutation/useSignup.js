@@ -1,15 +1,15 @@
+// src/pages/auth/signup/service/mutation/useSignup.ts
 import { request } from "../../../../../config/request";
 import { useMutation } from "@tanstack/react-query";
 
 export const useSignup = () => {
   return useMutation({
-    mutationFn: (data) => {
+    mutationFn: async (data) => {
       try {
-        request.post("/users/register", data).then((res) => {
-          console.log(res);
-        });
+        const response = await request.post("/auth/register", data);
+        return response.data;
       } catch (error) {
-        console.log(error.message.response.data.message);
+        throw error;
       }
     },
   });

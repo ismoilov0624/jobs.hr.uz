@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 import "./personal-infos.scss";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useGetInfos } from "./service/query/useGetInfos";
 
 const PersonalInfos = () => {
-  // const { data, isLoading } = useGetInfos();
-  // const navigate = useNavigate();
+  const { data, isLoading } = useGetInfos();
+  const navigate = useNavigate();
 
-  // const exit = () => {
-  //   Cookies.remove("user_token");
-  //   navigate("/", { replace: true });
-  // };
+  const exit = () => {
+    Cookies.remove("user_token");
+    navigate("/", { replace: true });
+  };
   const [activeTab, setActiveTab] = useState({
     education: 0,
     work: 0,
@@ -55,65 +56,6 @@ const PersonalInfos = () => {
       <div className="section-card">{renderTable(headers, section)}</div>
     </div>
   );
-
-  const generatePDF = () => {
-    const doc = new jsPDF();
-
-    // Title
-    doc.text("Shaxsiy Ma'lumotlar", 10, 10);
-
-    // Shaxsiy ma'lumotlar
-    doc.text("Ism: Ism Familiya", 10, 20);
-    doc.text("Ish holati: Ishsiz", 10, 30);
-
-    // Contact Info
-    doc.text("Aloqa Ma'lumotlari:", 10, 40);
-    doc.text("Telefon raqami: +998 ** *** ** **", 10, 50);
-    doc.text("Elektron pochta: example@mail.com", 10, 60);
-
-    // Additional Info
-    doc.text("Qo'shimcha Ma'lumotlar:", 10, 70);
-    doc.text("Millati: O'zbek", 10, 80);
-    doc.text("Haydovchilik guvohnomasi: Bor (B, C toifalari)", 10, 90);
-    doc.text("Yashash manzili: Toshkent shahri, Chilonzor tumani", 10, 100);
-
-    // Add Ta'lim Section (Dynamic Data)
-    doc.text("Ta'lim:", 10, 110);
-    doc.text("Ta'lim muassasasi: Oliy ta'lim muassasasi", 10, 120);
-    doc.text("Ilmiy daraja: Magistr", 10, 130);
-    doc.text("Ta'lim yo'nalishi: Kompyuter fanlari", 10, 140);
-    doc.text("Boshlanishi: 2020", 10, 150);
-    doc.text("Tamomlanishi: 2024", 10, 160);
-
-    // Add Ish tajribasi Section (Dynamic Data)
-    doc.text("Ish Tajribasi:", 10, 170);
-    doc.text("Tashkilot: XYZ Kompaniya", 10, 180);
-    doc.text("Lavozim: Dasturchi", 10, 190);
-    doc.text("Boshlanishi: 2021", 10, 200);
-    doc.text("Tamomlanishi: Hozirgi kunga qadar", 10, 210);
-
-    // Add Tillar Section (Dynamic Data)
-    doc.text("Tillar:", 10, 220);
-    doc.text("O'qish: O'zbek", 10, 230);
-    doc.text("So'zlashish: Ingliz", 10, 240);
-    doc.text("Tinglash: Rus", 10, 250);
-    doc.text("Yozish: O'zbek", 10, 260);
-
-    // Add Tavsiyalar Section (Dynamic Data)
-    doc.text("Tavsiyalar:", 10, 270);
-    doc.text("FIO: John Doe", 10, 280);
-    doc.text("Telefon: +998 ** *** ** **", 10, 290);
-    doc.text("Ish joyi va lavozimi: XYZ Kompaniya, Boshqaruvchi", 10, 300);
-
-    // Add Tavsiya bergan hodimlar Section (Dynamic Data)
-    doc.text("Tavsiya bergan hodimlar:", 10, 310);
-    doc.text("FIO: Jane Smith", 10, 320);
-    doc.text("Ish joyi: XYZ Kompaniya", 10, 330);
-    doc.text("Aloqa: +998 ** *** ** **", 10, 340);
-
-    // Save the generated PDF
-    doc.save("personal_infos.pdf");
-  };
 
   return (
     <div className="personal-infos-container">
@@ -265,11 +207,6 @@ const PersonalInfos = () => {
         "Ish joyi",
         "Aloqa",
       ])}
-
-      {/* Download PDF Button */}
-      <div className="download-pdf-btn">
-        <button onClick={generatePDF}>Download PDF</button>
-      </div>
     </div>
   );
 };

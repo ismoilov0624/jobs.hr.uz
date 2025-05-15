@@ -25,7 +25,7 @@
   }
 
   .signup-form {
-    background: rgba(255, 255, 255, 0.95); // slight transparency
+    background: rgba(255, 255, 255, 0.95);
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -34,7 +34,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    backdrop-filter: blur(10px); // blur effect if supported
+    backdrop-filter: blur(10px);
 
     .title {
       text-align: center;
@@ -79,6 +79,29 @@
       &:active {
         transform: translateY(0);
       }
+    }
+
+    .redirect-text {
+      text-align: center;
+      font-size: 1rem;
+      color: #1f2937;
+
+      .login-link {
+        color: #2563eb;
+        font-weight: 600;
+        text-decoration: none;
+        margin-left: 0.25rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .error {
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
     }
   }
 }
