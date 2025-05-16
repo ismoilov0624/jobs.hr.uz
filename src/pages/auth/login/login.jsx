@@ -6,6 +6,8 @@ import Cookies from "js-cookie";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./login.scss";
 
 export const Login = () => {
@@ -20,6 +22,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const [phone, setPhone] = useState("+");
+  const [showPassword, setShowPassword] = useState(false); // showPassword holati
 
   const submit = (data) => {
     const cleanPhone = phone.replace(/^\+/, "");
@@ -86,13 +89,36 @@ export const Login = () => {
           {errors.phone && <p className="error">{errors.phone.message}</p>}
         </div>
 
-        <div>
+        <div
+          className="password-input-wrapper"
+          style={{ position: "relative" }}
+        >
           <input
             {...register("password", { required: "Parol majburiy" })}
             placeholder="Parol"
-            type="password"
+            type={showPassword ? "text" : "password"}
             className="input"
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="password-toggle-btn"
+            aria-label={
+              showPassword ? "Parolni yashirish" : "Parolni ko‘rsatish"
+            }
+            style={{
+              position: "absolute",
+              top: "50%",
+              right: "1rem",
+              transform: "translateY(-50%)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: 0,
+            }}
+          >
+            {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+          </button>
           {errors.password && (
             <p className="error">{errors.password.message}</p>
           )}
@@ -102,7 +128,6 @@ export const Login = () => {
           {isPending ? "Yuklanmoqda..." : "Kirish"}
         </button>
 
-        {/* Ro'yxatdan o'tish sahifasiga yo'naltiruvchi link */}
         <p className="signup-link">
           Ro'yxatdan o'tmaganmisiz? <Link to="/signup">Ro'yxatdan o'tish</Link>
         </p>

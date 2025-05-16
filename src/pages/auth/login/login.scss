@@ -104,5 +104,33 @@
         }
       }
     }
+
+    .password-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .input {
+        flex-grow: 1;
+        padding-right: 2.5rem;
+      }
+
+      .password-toggle-btn {
+        position: absolute;
+        right: 0.75rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #4b5563;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+
+        &:hover {
+          color: #2563eb;
+        }
+      }
+    }
   }
 }

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useSignup } from "../signup/service/mutation/useSignup";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
 import "./signup.scss";
 
@@ -20,9 +21,11 @@ export const Signup = () => {
   const password = watch("password");
 
   const [phone, setPhone] = useState("+");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
   const submit = (data) => {
-    const cleanPhone = phone.replace(/^\+/, ""); // + belgisi olib tashlanadi
+    const cleanPhone = phone.replace(/^\+/, "");
 
     if (!cleanPhone) {
       toast.error("Telefon raqam majburiy!", { position: "top-right" });
@@ -72,7 +75,7 @@ export const Signup = () => {
       <form onSubmit={handleSubmit(submit)} className="signup-form">
         <h2 className="title">Ro'yxatdan o'tish</h2>
 
-        <div>
+        <div className="input-wrapper">
           <input
             value={phone}
             onChange={(e) => {
@@ -87,7 +90,7 @@ export const Signup = () => {
           {errors.phone && <p className="error">{errors.phone.message}</p>}
         </div>
 
-        <div>
+        <div className="input-wrapper">
           <input
             {...register("password", {
               required: "Parol majburiy",
@@ -97,24 +100,36 @@ export const Signup = () => {
               },
             })}
             placeholder="Parol"
-            type="password"
+            type={showPassword ? "text" : "password"}
             className="input"
           />
+          <span
+            className="toggle-password"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
           {errors.password && (
             <p className="error">{errors.password.message}</p>
           )}
         </div>
 
-        <div>
+        <div className="input-wrapper">
           <input
             {...register("repeatPassword", {
               required: "Parolni qayta kiriting",
               validate: (value) => value === password || "Parollar mos emas",
             })}
             placeholder="Parolni qayta kiriting"
-            type="password"
+            type={showRepeatPassword ? "text" : "password"}
             className="input"
           />
+          <span
+            className="toggle-password"
+            onClick={() => setShowRepeatPassword((prev) => !prev)}
+          >
+            {showRepeatPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
           {errors.repeatPassword && (
             <p className="error">{errors.repeatPassword.message}</p>
           )}
@@ -124,7 +139,6 @@ export const Signup = () => {
           {isPending ? "Yuklanmoqda..." : "Ro'yxatdan o'tish"}
         </button>
 
-        {/* Kirish sahifasiga link */}
         <p className="redirect-text">
           Allaqachon ro'yxatdan o'tganmisiz?{" "}
           <Link to="/login" className="login-link">
