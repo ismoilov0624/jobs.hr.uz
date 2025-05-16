@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./burger-menu.scss";
 import { useTranslation } from "react-i18next";
 
-const BurgerMenu = () => {
+const BurgerMenu = ({ isLoggedIn }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -41,12 +41,20 @@ const BurgerMenu = () => {
       </a>
 
       <div className="menu-auth">
-        <Link onClick={closeMenu} className="burger-link" to="/signup">
-          {t("signup")}
-        </Link>
-        <Link onClick={closeMenu} className="burger-link" to="/login">
-          {t("login")}
-        </Link>
+        {isLoggedIn ? (
+          <Link onClick={closeMenu} className="burger-link" to="/profile">
+            {t("myprofile")}
+          </Link>
+        ) : (
+          <>
+            <Link onClick={closeMenu} className="burger-link" to="/signup">
+              {t("signup")}
+            </Link>
+            <Link onClick={closeMenu} className="burger-link" to="/login">
+              {t("login")}
+            </Link>
+          </>
+        )}
       </div>
     </Menu>
   );
