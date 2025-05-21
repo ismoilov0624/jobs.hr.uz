@@ -12,10 +12,10 @@ export const About = () => {
   useScrollTop(0);
 
   const stats = [
-    { count: 4, label: "Bo'sh ish o'rinlari", img: suitcase },
-    { count: 6, label: "Tashkilotlar", img: comp },
-    { count: 39934, label: "Nomzodlar", img: worker },
-    { count: 131, label: "Barcha ish joylari", img: check },
+    { count: 14, label: "Bo'sh ish o'rinlari", img: suitcase },
+    { count: 17, label: "Tashkilotlar", img: comp },
+    { count: 1420, label: "Nomzodlar", img: worker },
+    { count: 24, label: "Barcha ish joylari", img: check },
   ];
 
   return (
