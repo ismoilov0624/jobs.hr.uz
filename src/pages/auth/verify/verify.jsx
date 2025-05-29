@@ -56,9 +56,8 @@ export const Verify = () => {
         <button className="telegram-btn">Telegram botga o‘tish</button>
       </a>
 
-      <a target="_blank" rel="noopener noreferrer" href={telegramBotUrl}>
-        <img className="qrcodebot" src="/src/assets/qrcodebot.jpg" alt="" />
-      </a>
+      <img className="qrcodebot" src="/src/assets/qrcodebot.jpg" alt="" />
+
       <a
         target="_blank"
         rel="noopener noreferrer"

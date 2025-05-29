@@ -43,7 +43,7 @@ export const Signup = () => {
             state: { phone: cleanPhone },
           });
 
-          toast.success("Kod yuborildi. Telegram orqali tasdiqlang!", {
+          toast.success("Telegram bot orqali tasdiqlang!", {
             position: "top-right",
             autoClose: 5000,
           });
