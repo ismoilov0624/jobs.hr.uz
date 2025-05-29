@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { request } from "../../../config/request";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import qrcodebot from "../../../assets/qrcodebot.jpg";
 import "react-toastify/dist/ReactToastify.css";
 import "./verify.scss";
 
@@ -56,7 +57,9 @@ export const Verify = () => {
         <button className="telegram-btn">Telegram botga o‘tish</button>
       </a>
 
-      <img className="qrcodebot" src="/src/assets/qrcodebot.jpg" alt="" />
+      <a href={telegramBotUrl}>
+        <img className="qrcodebot" src={qrcodebot} alt="" />
+      </a>
 
       <a
         target="_blank"
