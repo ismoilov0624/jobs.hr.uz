@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import {
   MapContainer,
@@ -10,9 +12,9 @@ import "leaflet/dist/leaflet.css";
 import "./companies.scss";
 import L from "leaflet";
 import { Link } from "react-router-dom";
-import comp_logo from "../../assets/comp_logo.png";
 import comp from "../../assets/comp.svg";
 import { useScrollTop } from "../../hooks/useScrollTop";
+import { useOrganizations } from "../../hooks/useOrganizations";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -37,95 +39,29 @@ const activeIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-const locations = [
-  {
-    id: 1,
-    name: "Asaka textile",
-    address: "Andijon viloyati, Asaka tumani",
-    logo: "/src/assets/comp_logo.png",
-    position: [40.6273554119504, 72.2412747672116],
-    active: true,
-  },
-  {
-    id: 2,
-    name: "Akfa eshik romlari",
-    address: "Andijon viloyati, Asaka tumani",
-    logo: "/roodell-logo.svg",
-    position: [40.64372987829876, 72.24692893562705],
-  },
-  {
-    id: 3,
-    name: "Asaka davr butlovchi MChJ",
-    address: "Andijon viloyati, Asaka tumani",
-    logo: "/adm-logo.svg",
-    position: [40.61448889384213, 72.27074476062307],
-  },
-  {
-    id: 4,
-    name: "Asaka Akfa va Mebellar",
-    address: "Andijon viloyati, Asaka tumani",
-    logo: "/adm-logo.svg",
-    position: [40.67670250558059, 72.23352119925285],
-  },
-
-  // Qo‘shilgan Farg‘ona viloyati tashkilotlari:
-  {
-    id: 5,
-    name: "Farg‘ona Neftni Qayta Ishlash Zavodi",
-    address: "Farg‘ona viloyati, Farg‘ona shahri",
-    logo: "/adm-logo.svg",
-    position: [40.388, 71.786], // taxminiy koordinata
-  },
-  {
-    id: 6,
-    name: "Qo‘qon Superfosfat Zavodi",
-    address: "Farg‘ona viloyati, Qo‘qon shahri",
-    logo: "/adm-logo.svg",
-    position: [40.528, 70.942], // taxminiy koordinata
-  },
-  {
-    id: 7,
-    name: "Farg‘ona Azot",
-    address: "Farg‘ona viloyati, Farg‘ona shahri",
-    logo: "/adm-logo.svg",
-    position: [40.39, 71.781], // taxminiy koordinata
-  },
-  {
-    id: 8,
-    name: "Qo‘qon Mebel",
-    address: "Farg‘ona viloyati, Qo‘qon shahri",
-    logo: "/adm-logo.svg",
-    position: [40.525, 70.943], // taxminiy koordinata
-  },
-
-  // Davomi (avvalgi Andijon tashkilotlari):
-  {
-    id: 9,
-    name: "Asaka yog'",
-    address: "Andijon viloyati",
-    logo: "/adm-logo.svg",
-    position: [40.647518508252155, 72.25439077596566],
-  },
-  {
-    id: 10,
-    name: "Asaka tuman yoshlar kichik sanoati",
-    address: "Andijon viloyati, Asaka tumani",
-    logo: "/adm-logo.svg",
-    position: [40.66658135655309, 72.27242718391031],
-  },
-];
-
 const Companies = () => {
   useScrollTop(0);
-  const [activeLocation, setActiveLocation] = useState(1);
-  const [mapCenter, setMapCenter] = useState(
-    locations.find((loc) => loc.id === 1).position
-  );
-  const [mapZoom, setMapZoom] = useState(15);
+  const { data: organizations = [], isLoading, error } = useOrganizations();
 
-  const handleLocationClick = (id, position) => {
+  const [activeLocation, setActiveLocation] = useState(null);
+  const [mapCenter, setMapCenter] = useState([
+    40.6273554119504, 72.2412747672116,
+  ]); // Default center
+  const [mapZoom, setMapZoom] = useState(10);
+
+  // Birinchi tashkilotni active qilish
+  useEffect(() => {
+    if (organizations.length > 0 && !activeLocation) {
+      const firstOrg = organizations[0];
+      setActiveLocation(firstOrg.id);
+      setMapCenter([firstOrg.latitude, firstOrg.longitude]);
+      setMapZoom(15);
+    }
+  }, [organizations, activeLocation]);
+
+  const handleLocationClick = (id, latitude, longitude) => {
     setActiveLocation(id);
-    setMapCenter(position);
+    setMapCenter([latitude, longitude]);
     setMapZoom(16);
   };
 
@@ -143,6 +79,42 @@ const Companies = () => {
     return null;
   };
 
+  // Avatar URL ni tekshirish va to'g'ri formatda qaytarish
+  const getAvatarUrl = (avatar) => {
+    if (!avatar || avatar === "rasm") return null;
+
+    // Agar URL to'g'ri formatda bo'lsa
+    if (avatar.startsWith("http://") || avatar.startsWith("https://")) {
+      return avatar;
+    }
+
+    return null;
+  };
+
+  if (isLoading) {
+    return (
+      <div className="container">
+        <div className="map-container">
+          <div className="loading-state">
+            <p>Tashkilotlar yuklanmoqda...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container">
+        <div className="map-container">
+          <div className="error-state">
+            <p>Xatolik yuz berdi: {error.message}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       <div className="map-container">
@@ -156,64 +128,81 @@ const Companies = () => {
 
         <div className="map-content">
           <div className="location-list">
-            {locations.map((location) => (
-              <div
-                key={location.id}
-                className={`location-item ${
-                  location.id === activeLocation ? "active" : ""
-                }`}
-                onClick={() =>
-                  handleLocationClick(location.id, location.position)
-                }
-              >
-                <div className="location-logo">
-                  {location.id === 2 ? (
+            {organizations.map((organization) => {
+              const avatarUrl = getAvatarUrl(organization.avatar);
+
+              return (
+                <div
+                  key={organization.id}
+                  className={`location-item ${
+                    organization.id === activeLocation ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    handleLocationClick(
+                      organization.id,
+                      organization.latitude,
+                      organization.longitude
+                    )
+                  }
+                >
+                  <div className="location-logo">
+                    {avatarUrl ? (
+                      <img
+                        src={avatarUrl || "/placeholder.svg"}
+                        alt={`${organization.title} logo`}
+                        className="organization-avatar"
+                        onError={(e) => {
+                          // Agar rasm yuklanmasa, default icon ko'rsatish
+                          e.target.style.display = "none";
+                          e.target.nextSibling.style.display = "block";
+                        }}
+                      />
+                    ) : null}
                     <img
-                      src={comp}
-                      alt="ROODELL logo"
-                      className="roodell-logo"
+                      src={comp || "/placeholder.svg"}
+                      alt="Default organization icon"
+                      className="default-icon"
+                      style={{ display: avatarUrl ? "none" : "block" }}
                     />
-                  ) : (
-                    <img src={comp} alt="ADM logo" className="adm-logo" />
-                  )}
+                  </div>
+                  <div className="location-info">
+                    <h3>{organization.title}</h3>
+                    <p>{organization.address}</p>
+                  </div>
+                  <div className="external-link">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 8.66667V12.6667C12 13.0203 11.8595 13.3594 11.6095 13.6095C11.3594 13.8595 11.0203 14 10.6667 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V5.33333C2 4.97971 2.14048 4.64057 2.39052 4.39052C2.64057 4.14048 2.97971 4 3.33333 4H7.33333"
+                        stroke="#666"
+                        strokeWidth="1.33333"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M10 2H14V6"
+                        stroke="#666"
+                        strokeWidth="1.33333"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M6.66667 9.33333L14 2"
+                        stroke="#666"
+                        strokeWidth="1.33333"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
-                <div className="location-info">
-                  <h3>{location.name}</h3>
-                  <p>{location.address}</p>
-                </div>
-                <div className="external-link">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 8.66667V12.6667C12 13.0203 11.8595 13.3594 11.6095 13.6095C11.3594 13.8595 11.0203 14 10.6667 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V5.33333C2 4.97971 2.14048 4.64057 2.39052 4.39052C2.64057 4.14048 2.97971 4 3.33333 4H7.33333"
-                      stroke="#666"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M10 2H14V6"
-                      stroke="#666"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M6.66667 9.33333L14 2"
-                      stroke="#666"
-                      strokeWidth="1.33333"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="map-view">
@@ -228,12 +217,29 @@ const Companies = () => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | &copy; Nextech'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <Marker
-                position={
-                  locations.find((loc) => loc.id === activeLocation).position
-                }
-                icon={activeIcon}
-              />
+              {/* Barcha tashkilotlar uchun markerlar */}
+              {organizations.map((org) => (
+                <Marker
+                  key={org.id}
+                  position={[org.latitude, org.longitude]}
+                  icon={
+                    org.id === activeLocation
+                      ? activeIcon
+                      : new L.Icon({
+                          iconUrl:
+                            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+                          iconRetinaUrl:
+                            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+                          shadowUrl:
+                            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+                          iconSize: [20, 33],
+                          iconAnchor: [10, 33],
+                          popupAnchor: [1, -28],
+                          shadowSize: [33, 33],
+                        })
+                  }
+                />
+              ))}
               <ZoomControl position="topright" />
             </MapContainer>
           </div>
