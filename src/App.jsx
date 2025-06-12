@@ -23,6 +23,10 @@ import { Experience } from "./pages/user/profile-sections/experience";
 import { Relatives } from "./pages/user/profile-sections/relatives";
 import Applications from "./pages/user/applications/applications";
 
+import { ForgotPassword } from "./pages/auth/forgot-password/forgot-password";
+import { VerifyReset } from "./pages/auth/verify-reset/verify-reset";
+import { ResetPassword } from "./pages/auth/reset-password/reset-password";
+
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -74,6 +78,9 @@ function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="verify" element={<Verify />} />
         <Route path="login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-reset" element={<VerifyReset />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         {/* Protected user routes - alohida */}
         <Route

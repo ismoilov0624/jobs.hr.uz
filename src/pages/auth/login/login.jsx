@@ -154,6 +154,11 @@ export const Login = () => {
         <p className="signup-link">
           Ro'yxatdan o'tmaganmisiz? <Link to="/signup">Ro'yxatdan o'tish</Link>
         </p>
+
+        <p className="forgot-password-link">
+          Parolni unutdingizmi?{" "}
+          <Link to="/forgot-password">Parolni tiklash</Link>
+        </p>
       </form>
     </div>
   );
