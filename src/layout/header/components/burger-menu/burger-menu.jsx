@@ -37,7 +37,7 @@ const BurgerMenu = ({ isLoggedIn }) => {
         rel="noopener noreferrer"
         className="header__link"
       >
-        {t("telegram_channel")}
+        Telegram kanal
       </a>
 
       <div className="menu-auth">
