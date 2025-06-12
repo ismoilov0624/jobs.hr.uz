@@ -9,16 +9,10 @@ import comp from "../../assets/comp.svg";
 import worker from "../../assets/worker.svg";
 import check from "../../assets/check.svg";
 import FeaturedOrganizations from "../../components/featured-organizations/featured-organizations";
+import { Statistics } from "../../components/statistics/statistics";
 
 export const Home = () => {
   useScrollTop(0);
-
-  const stats = [
-    { count: 14, label: "Bo'sh ish o'rinlari", img: suitcase },
-    { count: 17, label: "Tashkilotlar", img: comp },
-    { count: 1420, label: "Nomzodlar", img: worker },
-    { count: 24, label: "Barcha ish joylari", img: check },
-  ];
 
   return (
     <div className="home">
@@ -47,23 +41,7 @@ export const Home = () => {
             </div>
           </div>
 
-          <div className="home__stats">
-            {stats.map((item, index) => (
-              <div className="home__stat-box" key={index}>
-                <img src={item.img || "/placeholder.svg"} alt="Icon" />
-                <div className="home__stat-text">
-                  <h2>
-                    <CountUp
-                      end={item.count}
-                      duration={2}
-                      separator={item.separator || ""}
-                    />
-                  </h2>
-                  <p>{item.label}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <Statistics />
         </div>
       </section>
 

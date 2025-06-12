@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+"use client";
+
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSignup } from "../signup/service/mutation/useSignup";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import TermsModal from "../../../components/terms-modal/terms-modal";
 import "react-toastify/dist/ReactToastify.css";
 import "./signup.scss";
 
@@ -23,12 +26,23 @@ export const Signup = () => {
   const [phone, setPhone] = useState("+");
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const submit = (data) => {
     const cleanPhone = phone.replace(/^\+/, "");
 
     if (!cleanPhone) {
       toast.error("Telefon raqam majburiy!", { position: "top-right" });
+      return;
+    }
+
+    if (!acceptedTerms) {
+      toast.error("Oferta shartlarini qabul qiling!", {
+        position: "top-right",
+      });
       return;
     }
 
@@ -50,6 +64,9 @@ export const Signup = () => {
 
           reset();
           setPhone("+");
+          setSelectedRegion("");
+          setSelectedDistrict("");
+          setAcceptedTerms(false);
         },
         onError: (error) => {
           const rawMessage = error?.response?.data?.error?.message;
@@ -67,85 +84,117 @@ export const Signup = () => {
   };
 
   return (
-    <div className="signup-container">
-      <Link to="/" className="home-link">
-        Bosh sahifa
-      </Link>
+    <>
+      <div className="signup-container">
+        <Link to="/" className="home-link">
+          Bosh sahifa
+        </Link>
 
-      <form onSubmit={handleSubmit(submit)} className="signup-form">
-        <h2 className="title">Ro'yxatdan o'tish</h2>
+        <form onSubmit={handleSubmit(submit)} className="signup-form">
+          <h2 className="title">Ro'yxatdan o'tish</h2>
 
-        <div className="input-wrapper">
-          <input
-            value={phone}
-            onChange={(e) => {
-              const raw = e.target.value;
-              if (/^\+?\d*$/.test(raw)) {
-                setPhone(raw);
-              }
-            }}
-            placeholder="Telefon raqam"
-            className="input"
-          />
-          {errors.phone && <p className="error">{errors.phone.message}</p>}
-        </div>
+          <div className="input-wrapper">
+            <input
+              value={phone}
+              onChange={(e) => {
+                const raw = e.target.value;
+                if (/^\+?\d*$/.test(raw)) {
+                  setPhone(raw);
+                }
+              }}
+              placeholder="Telefon raqam"
+              className="input"
+            />
+            {errors.phone && <p className="error">{errors.phone.message}</p>}
+          </div>
 
-        <div className="input-wrapper">
-          <input
-            {...register("password", {
-              required: "Parol majburiy",
-              minLength: {
-                value: 6,
-                message: "Parol kamida 6 ta belgidan iborat bo'lishi kerak",
-              },
-            })}
-            placeholder="Parol"
-            type={showPassword ? "text" : "password"}
-            className="input"
-          />
-          <span
-            className="toggle-password"
-            onClick={() => setShowPassword((prev) => !prev)}
+          <div className="input-wrapper">
+            <input
+              {...register("password", {
+                required: "Parol majburiy",
+                minLength: {
+                  value: 6,
+                  message: "Parol kamida 6 ta belgidan iborat bo'lishi kerak",
+                },
+              })}
+              placeholder="Parol"
+              type={showPassword ? "text" : "password"}
+              className="input"
+            />
+            <span
+              className="toggle-password"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+            {errors.password && (
+              <p className="error">{errors.password.message}</p>
+            )}
+          </div>
+
+          <div className="input-wrapper">
+            <input
+              {...register("repeatPassword", {
+                required: "Parolni qayta kiriting",
+                validate: (value) => value === password || "Parollar mos emas",
+              })}
+              placeholder="Parolni qayta kiriting"
+              type={showRepeatPassword ? "text" : "password"}
+              className="input"
+            />
+            <span
+              className="toggle-password"
+              onClick={() => setShowRepeatPassword((prev) => !prev)}
+            >
+              {showRepeatPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+            {errors.repeatPassword && (
+              <p className="error">{errors.repeatPassword.message}</p>
+            )}
+          </div>
+
+          <div className="terms-wrapper">
+            <label className="terms-label">
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                className="terms-checkbox"
+              />
+              <span className="terms-text">
+                <button
+                  type="button"
+                  onClick={() => setShowTermsModal(true)}
+                  className="terms-link"
+                >
+                  Oferta shartlari
+                </button>
+                ni o'qidim va qabul qilaman
+              </span>
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            className="submit-btn"
+            disabled={isPending || !acceptedTerms}
           >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
-          {errors.password && (
-            <p className="error">{errors.password.message}</p>
-          )}
-        </div>
+            {isPending ? "Yuklanmoqda..." : "Ro'yxatdan o'tish"}
+          </button>
 
-        <div className="input-wrapper">
-          <input
-            {...register("repeatPassword", {
-              required: "Parolni qayta kiriting",
-              validate: (value) => value === password || "Parollar mos emas",
-            })}
-            placeholder="Parolni qayta kiriting"
-            type={showRepeatPassword ? "text" : "password"}
-            className="input"
-          />
-          <span
-            className="toggle-password"
-            onClick={() => setShowRepeatPassword((prev) => !prev)}
-          >
-            {showRepeatPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
-          {errors.repeatPassword && (
-            <p className="error">{errors.repeatPassword.message}</p>
-          )}
-        </div>
+          <p className="redirect-text">
+            Allaqachon ro'yxatdan o'tganmisiz?{" "}
+            <Link to="/login" className="login-link">
+              Kirish
+            </Link>
+          </p>
+        </form>
+      </div>
 
-        <button type="submit" className="submit-btn" disabled={isPending}>
-          {isPending ? "Yuklanmoqda..." : "Ro'yxatdan o'tish"}
-        </button>
-
-        <p className="redirect-text">
-          Allaqachon ro'yxatdan o'tganmisiz?{" "}
-          <Link to="/login" className="login-link">
-            Kirish
-          </Link>
-        </p>
-      </form>
-    </div>
+      <TermsModal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+      />
+    </>
   );
 };

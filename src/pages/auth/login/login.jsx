@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+"use client";
+
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLogin } from "./service/useLogin.js";
 import { saveState } from "../../../config/storage.js";
@@ -22,7 +24,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const [phone, setPhone] = useState("+");
-  const [showPassword, setShowPassword] = useState(false); // showPassword holati
+  const [showPassword, setShowPassword] = useState(false);
 
   const submit = (data) => {
     const cleanPhone = phone.replace(/^\+/, "");
@@ -31,23 +33,44 @@ export const Login = () => {
       { phone: cleanPhone, password: data.password },
       {
         onSuccess: (res) => {
-          Cookies.set("user_token", res.data.accessToken, { expires: 1 });
-          saveState("user", res.user);
+          // Token saqlash
+          if (res.data?.accessToken) {
+            Cookies.set("user_token", res.data.accessToken, { expires: 1 });
+          } else if (res.accessToken) {
+            Cookies.set("user_token", res.accessToken, { expires: 3 });
+          } else {
+            console.warn("Token topilmadi response'da");
+          }
+
+          // User ma'lumotlarini saqlash - turli joylarda bo'lishi mumkin
+          let user = null;
+          if (res.data?.user) {
+            user = res.data.user;
+          } else if (res.user) {
+            user = res.user;
+          } else if (res.data?.data?.user) {
+            user = res.data.data.user;
+          }
+
+          if (user) {
+            saveState("user", user);
+          }
+
           navigate("/", { replace: true });
 
-          toast.success("Login successful! Welcome back", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          // toast.success("Login successful! Welcome back", {
+          //   position: "top-right",
+          //   autoClose: 5000,
+          //   hideProgressBar: false,
+          //   closeOnClick: true,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          // });
         },
         onError: (error) => {
+          console.error("Login error:", error);
           const errorMessage =
-            error?.response?.data?.message ||
-            "Login failed! Please check your credentials.";
+            error?.response?.data?.message || "Login yoki parol noto'g'ri";
 
           toast.error(errorMessage, {
             position: "top-right",
@@ -104,7 +127,7 @@ export const Login = () => {
             onClick={() => setShowPassword(!showPassword)}
             className="password-toggle-btn"
             aria-label={
-              showPassword ? "Parolni yashirish" : "Parolni ko‘rsatish"
+              showPassword ? "Parolni yashirish" : "Parolni ko'rsatish"
             }
             style={{
               position: "absolute",

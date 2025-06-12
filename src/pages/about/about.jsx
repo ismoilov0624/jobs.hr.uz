@@ -7,6 +7,7 @@ import suitcase from "../../assets/suitcase.svg";
 import comp from "../../assets/comp.svg";
 import worker from "../../assets/worker.svg";
 import check from "../../assets/check.svg";
+import { Statistics } from "../../components/statistics/statistics";
 
 export const About = () => {
   useScrollTop(0);
@@ -52,23 +53,7 @@ export const About = () => {
       </div>
 
       <div className="container">
-        <div className="home__stats">
-          {stats.map((item, index) => (
-            <div className="home__stat-box" key={index}>
-              <img src={item.img} alt="Icon" />
-              <div className="home__stat-text">
-                <h2>
-                  <CountUp
-                    end={item.count}
-                    duration={2}
-                    separator={item.separator || ""}
-                  />
-                </h2>
-                <p>{item.label}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Statistics />
       </div>
     </>
   );

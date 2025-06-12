@@ -17,12 +17,12 @@ export const Header = () => {
     setIsLoggedIn(!!token); // token bo'lsa true, yo'q bo'lsa false
   }, []);
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    setIsOpen(false);
-  };
+  // const changeLanguage = (lng) => {
+  //   i18n.changeLanguage(lng);
+  //   setIsOpen(false);
+  // };
 
-  const currentLang = i18n.language.toUpperCase();
+  // const currentLang = i18n.language.toUpperCase();
 
   return (
     <header className="header">
@@ -43,7 +43,7 @@ export const Header = () => {
                   `header__link ${isActive ? "active" : ""}`
                 }
               >
-                {t("home")}
+                Bosh sahifa
               </NavLink>
               <NavLink
                 to="/about"
@@ -51,7 +51,7 @@ export const Header = () => {
                   `header__link ${isActive ? "active" : ""}`
                 }
               >
-                {t("about")}
+                Biz haqimizda
               </NavLink>
               <NavLink
                 to="/jobs"
@@ -59,7 +59,7 @@ export const Header = () => {
                   `header__link ${isActive ? "active" : ""}`
                 }
               >
-                {t("vacancies")}
+                Bo'sh ish o'rinlari
               </NavLink>
               <NavLink
                 to="/companies"
@@ -67,13 +67,13 @@ export const Header = () => {
                   `header__link ${isActive ? "active" : ""}`
                 }
               >
-                {t("companies")}
+                Tashkilotlar
               </NavLink>
             </nav>
           </div>
 
           <div className="header__right">
-            <div className="header__lang-dropdown">
+            {/* <div className="header__lang-dropdown">
               <button onClick={() => setIsOpen(!isOpen)}>
                 {currentLang} ▼
               </button>
@@ -84,7 +84,7 @@ export const Header = () => {
                   <li onClick={() => changeLanguage("en")}>English</li>
                 </ul>
               )}
-            </div>
+            </div> */}
 
             {isLoggedIn ? (
               <NavLink
@@ -93,7 +93,7 @@ export const Header = () => {
                   `header__profile ${isActive ? "active" : ""}`
                 }
               >
-                {t("myprofile")}
+                Mening profilim
               </NavLink>
             ) : (
               <div className="header__auth">
@@ -103,7 +103,7 @@ export const Header = () => {
                     `burger__link ${isActive ? "active" : ""}`
                   }
                 >
-                  {t("signup")}
+                  Ro'yxatdan o'tish
                 </NavLink>
                 <NavLink
                   to="/login"
@@ -111,7 +111,7 @@ export const Header = () => {
                     `burger__link ${isActive ? "active" : ""}`
                   }
                 >
-                  {t("login")}
+                  Kirish
                 </NavLink>
               </div>
             )}
