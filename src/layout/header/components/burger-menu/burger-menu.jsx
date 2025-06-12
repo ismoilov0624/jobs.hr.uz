@@ -19,16 +19,16 @@ const BurgerMenu = ({ isLoggedIn }) => {
   return (
     <Menu right isOpen={isOpen} onStateChange={handleStateChange}>
       <Link onClick={closeMenu} className="menu-item" to="/">
-        {t("home")}
+        Bosh sahifa
       </Link>
       <Link onClick={closeMenu} className="menu-item" to="/about">
-        {t("about")}
+        Biz haqimizda
       </Link>
       <Link onClick={closeMenu} className="menu-item" to="/jobs">
-        {t("vacancies")}
+        Vakansiyalar
       </Link>
       <Link onClick={closeMenu} className="menu-item" to="/companies">
-        {t("companies")}
+        Tashkilotlar
       </Link>
 
       <a
@@ -43,15 +43,15 @@ const BurgerMenu = ({ isLoggedIn }) => {
       <div className="menu-auth">
         {isLoggedIn ? (
           <Link onClick={closeMenu} className="burger-link" to="/profile">
-            {t("myprofile")}
+            Mening profilim
           </Link>
         ) : (
           <>
             <Link onClick={closeMenu} className="burger-link" to="/signup">
-              {t("signup")}
+              Ro'yxatdan o'tish
             </Link>
             <Link onClick={closeMenu} className="burger-link" to="/login">
-              {t("login")}
+              Kirish
             </Link>
           </>
         )}
