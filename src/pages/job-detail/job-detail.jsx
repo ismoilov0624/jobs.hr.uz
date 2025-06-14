@@ -176,7 +176,7 @@ const JobDetail = () => {
 
                 <div className="job-stats">
                   <div className="stat-item">
-                    <DollarSign size={18} />
+                    <p className="salary">Maosh:</p>
                     <span className="salary">{formatSalary(job.salary)}</span>
                   </div>
                   <div className="stat-item">
