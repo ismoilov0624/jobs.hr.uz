@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Variables
 $primary-color: #2563eb;
 $primary-hover: #1d4ed8;
@@ -777,7 +779,7 @@ $transition: all 0.2s ease-in-out;
             color: $white;
 
             &:hover:not(:disabled) {
-              background-color: darken($success-color, 10%);
+              background-color: color.adjust($success-color, $lightness: -10%);
               transform: translateY(-1px);
               box-shadow: 0 4px 8px rgba($success-color, 0.3);
             }
@@ -833,7 +835,7 @@ $transition: all 0.2s ease-in-out;
             color: $white;
 
             &:hover:not(:disabled) {
-              background-color: darken($danger-color, 10%);
+              background-color: color.adjust($danger-color, $lightness: -10%);
               transform: translateY(-1px);
               box-shadow: 0 4px 8px rgba($danger-color, 0.3);
             }
@@ -865,7 +867,7 @@ $transition: all 0.2s ease-in-out;
 
         .success-info {
           background-color: rgba($success-color, 0.1);
-          color: darken($success-color, 20%);
+          color: color.adjust($success-color, $lightness: -20%);
           border: 1px solid rgba($success-color, 0.3);
           margin: 0;
           display: flex;
@@ -880,7 +882,7 @@ $transition: all 0.2s ease-in-out;
 
         .warning-info {
           background-color: rgba($warning-color, 0.1);
-          color: darken($warning-color, 20%);
+          color: color.adjust($warning-color, $lightness: -20%);
           border: 1px solid rgba($warning-color, 0.3);
           margin: 0;
           display: flex;
