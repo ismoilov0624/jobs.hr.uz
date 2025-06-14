@@ -256,7 +256,6 @@ const Applications = () => {
                       </td>
                       <td>
                         <div className="salary-info">
-                          <DollarSign size={14} />
                           <span>{formatSalary(application.job?.salary)}</span>
                         </div>
                       </td>

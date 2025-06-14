@@ -11,7 +11,10 @@ import logo from "../../assets/logo.png";
 // PDF uchun stillar
 const styles = StyleSheet.create({
   page: {
-    padding: 30,
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingLeft: 57, // 2cm margin
+    paddingRight: 57, // 2cm margin
     fontSize: 11,
     fontFamily: "Helvetica",
     lineHeight: 1.4,
@@ -262,7 +265,7 @@ const ResumePDF = ({
         {/* Header with Logo and Profile Image */}
         <View style={styles.header}>
           <View style={styles.logoSection}>
-            <Image style={styles.logo} src={logo} />
+            <Image style={styles.logo} src={logo || "/placeholder.svg"} />
           </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>MA'LUMOTNOMA</Text>
