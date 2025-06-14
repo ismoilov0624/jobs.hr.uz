@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { request } from "../../../config/request";
@@ -21,7 +21,6 @@ export const Verify = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(phone, data.code);
       const res = await request.post("/auth/verify", {
         phone,
         code: data.code,
@@ -58,7 +57,11 @@ export const Verify = () => {
       </a>
 
       <a href={telegramBotUrl}>
-        <img className="qrcodebot" src={qrcodebot} alt="" />
+        <img
+          className="qrcodebot"
+          src={qrcodebot || "/placeholder.svg"}
+          alt=""
+        />
       </a>
 
       <a

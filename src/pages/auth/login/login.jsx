@@ -39,7 +39,7 @@ export const Login = () => {
           } else if (res.accessToken) {
             Cookies.set("user_token", res.accessToken, { expires: 3 });
           } else {
-            console.warn("Token topilmadi response'da");
+            //console.warn("Token topilmadi response'da");
           }
 
           // User ma'lumotlarini saqlash - turli joylarda bo'lishi mumkin
@@ -68,7 +68,7 @@ export const Login = () => {
           // });
         },
         onError: (error) => {
-          console.error("Login error:", error);
+          //console.error("Login error:", error);
           const errorMessage =
             error?.response?.data?.message || "Login yoki parol noto'g'ri";
 

@@ -48,10 +48,7 @@ const JobDetail = () => {
   const { data: userProfile } = useUserProfile();
 
   const checkProfileCompleteness = () => {
-    console.log("Profile completeness check:", userProfile);
-
     if (!userProfile) {
-      console.log("❌ User profile yo'q");
       return false;
     }
 
@@ -63,15 +60,11 @@ const JobDetail = () => {
       address: userProfile.address,
     };
 
-    console.log("Required fields:", requiredFields);
-
     const isComplete = Object.entries(requiredFields).every(([key, value]) => {
       const isValid = value && String(value).trim() !== "";
-      console.log(`${key}: "${value}" - ${isValid ? "✅" : "❌"}`);
       return isValid;
     });
 
-    console.log("Profile complete:", isComplete);
     return isComplete;
   };
 
@@ -93,7 +86,6 @@ const JobDetail = () => {
       await applyForJob(jobId);
       toast.success("Ariza muvaffaqiyatli topshirildi!");
     } catch (error) {
-      console.error("Apply error:", error);
       if (error.response?.status === 409) {
         toast.warning("Siz bu ish uchun allaqachon ariza topshirgansiz");
       } else {

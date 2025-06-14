@@ -56,22 +56,13 @@ export const useLogout = () => {
 
 // Xavfsiz User ID olish funksiyasi - to'liq qayta yozilgan
 const safeGetUserId = () => {
-  console.log("🔍 safeGetUserId boshlandi");
-
   try {
     // 1. Token'dan user ID olish (eng ishonchli usul)
     const token = Cookies.get("user_token");
-    console.log("Token mavjudligi:", !!token);
 
     if (token && typeof token === "string" && token.trim() !== "") {
       try {
         const userId = getUserIdFromToken(token);
-        console.log(
-          "Token'dan olingan userId:",
-          userId,
-          "Type:",
-          typeof userId
-        );
 
         // Primitive type'larni tekshirish
         if (
@@ -85,28 +76,22 @@ const safeGetUserId = () => {
             cleanId !== "null" &&
             cleanId !== "0"
           ) {
-            console.log("✅ Token'dan valid ID:", cleanId);
             return cleanId;
           }
         }
-      } catch (tokenError) {
-        console.error("Token parse xatoligi:", tokenError);
-      }
+      } catch (tokenError) {}
     }
 
     // 2. localStorage'dan user ma'lumotlarini olish
     const storedUser = localStorage.getItem("user");
-    console.log("localStorage'da user string:", storedUser);
 
     if (storedUser && storedUser !== "undefined" && storedUser !== "null") {
       try {
         const user = JSON.parse(storedUser);
-        console.log("Parse qilingan user:", user);
 
         // React Query object'ini aniqlash va rad etish
         if (user && typeof user === "object") {
           if (user.client || user.queryKey || user.meta || user.queries) {
-            console.error("❌ React Query object topildi, tozalanmoqda");
             localStorage.removeItem("user");
             return null;
           }
@@ -130,22 +115,18 @@ const safeGetUserId = () => {
                 cleanId !== "null" &&
                 cleanId !== "0"
               ) {
-                console.log("✅ localStorage'dan valid ID:", cleanId);
                 return cleanId;
               }
             }
           }
         }
       } catch (parseError) {
-        console.error("JSON parse xatoligi:", parseError);
         localStorage.removeItem("user");
       }
     }
 
-    console.error("❌ Hech qayerdan valid user ID topilmadi");
     return null;
   } catch (error) {
-    console.error("safeGetUserId umumiy xatolik:", error);
     return null;
   }
 };
@@ -155,15 +136,9 @@ export const useUserProfile = () => {
   return useQuery({
     queryKey: ["userProfile"],
     queryFn: async () => {
-      console.log(
-        "🔄 useUserProfile - /users/profile/userId endpoint'ini ishlatish"
-      );
-
       const userId = safeGetUserId();
-      console.log("Olingan userId:", userId, "Type:", typeof userId);
 
       if (!userId) {
-        console.error("❌ User ID topilmadi");
         throw new Error(
           "Foydalanuvchi ID topilmadi. Iltimos, qayta login qiling."
         );
@@ -171,11 +146,9 @@ export const useUserProfile = () => {
 
       // Oxirgi tekshiruv - userId object emasligini ta'minlash
       if (typeof userId === "object") {
-        console.error("❌ userId hali ham object:", userId);
         throw new Error("User ID noto'g'ri formatda");
       }
 
-      console.log("✅ fetchUserProfile chaqirilmoqda, userId:", userId);
       const userProfile = await fetchUserProfile(userId);
 
       // Muvaffaqiyatli ma'lumot olinganda localStorage'ga saqlash
@@ -184,7 +157,6 @@ export const useUserProfile = () => {
         typeof userProfile === "object" &&
         !userProfile.client
       ) {
-        console.log("💾 User ma'lumotlari localStorage'ga saqlanmoqda");
         saveState("user", userProfile);
       }
 
@@ -210,18 +182,11 @@ export const useUserProfileById = (userId) => {
   return useQuery({
     queryKey: ["userProfile", userId],
     queryFn: () => {
-      console.log(
-        "useUserProfileById chaqirildi, userId:",
-        userId,
-        typeof userId
-      );
-
       if (!userId) {
         throw new Error("User ID kerak");
       }
 
       if (typeof userId === "object") {
-        console.error("useUserProfileById - userId object:", userId);
         throw new Error("User ID noto'g'ri formatda");
       }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Eye, Calendar, Building, DollarSign, MapPin } from "lucide-react";
+import { Eye, Calendar, Building, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useUserApplications } from "../../../hooks/useJobs";
 import {
@@ -19,42 +19,24 @@ const Applications = () => {
 
   // Applications ma'lumotlarini to'g'ri strukturadan olish
   const applications = (() => {
-    console.log("📋 Raw applications data:", applicationsData);
-
     // API response strukturasini tekshirish
     if (
       applicationsData?.data?.applications &&
       Array.isArray(applicationsData.data.applications)
     ) {
-      console.log(
-        "✅ Found applications in data.applications:",
-        applicationsData.data.applications.length
-      );
       return applicationsData.data.applications;
     }
 
     if (Array.isArray(applicationsData?.data)) {
-      console.log(
-        "✅ Found applications in data:",
-        applicationsData.data.length
-      );
       return applicationsData.data;
     }
 
     if (Array.isArray(applicationsData)) {
-      console.log(
-        "✅ Found applications as direct array:",
-        applicationsData.length
-      );
       return applicationsData;
     }
 
-    console.log("⚠️ No applications found, returning empty array");
     return [];
   })();
-
-  console.log("📋 Final applications array:", applications);
-  console.log("📋 Applications length:", applications.length);
 
   const getStatusBadge = (status) => {
     const statusMap = {
@@ -113,7 +95,6 @@ const Applications = () => {
   }
 
   if (error) {
-    console.error("❌ Applications error:", error);
     return (
       <div className="applications-container">
         <div className="applications-header">

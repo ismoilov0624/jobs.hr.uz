@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 const BurgerMenu = ({ isLoggedIn }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const handleStateChange = (state) => {
     setIsOpen(state.isOpen);

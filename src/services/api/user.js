@@ -5,11 +5,8 @@ import Cookies from "js-cookie";
 
 // User ID olish helper funksiyasi - to'g'rilangan
 const getCurrentUserId = () => {
-  console.log("getCurrentUserId chaqirildi");
-
   // 1. localStorage'dan
   const user = loadState("user");
-  console.log("localStorage user:", user);
 
   if (user && typeof user === "object") {
     // Agar user object bo'lsa, id ni olish
@@ -17,7 +14,6 @@ const getCurrentUserId = () => {
       user.id &&
       (typeof user.id === "string" || typeof user.id === "number")
     ) {
-      console.log("getCurrentUserId - localStorage'dan ID olindi:", user.id);
       return String(user.id);
     }
     // Nested structure uchun
@@ -26,28 +22,21 @@ const getCurrentUserId = () => {
       user.user.id &&
       (typeof user.user.id === "string" || typeof user.user.id === "number")
     ) {
-      console.log(
-        "getCurrentUserId - localStorage'dan nested ID olindi:",
-        user.user.id
-      );
       return String(user.user.id);
     }
   }
 
   // 2. Token'dan
   const token = Cookies.get("user_token");
-  console.log("Token mavjud:", !!token);
 
   if (token) {
     try {
       const userId = getUserIdFromToken(token);
-      console.log("Token'dan olingan userId:", userId, typeof userId);
 
       if (
         userId &&
         (typeof userId === "string" || typeof userId === "number")
       ) {
-        console.log("getCurrentUserId - token'dan ID olindi:", userId);
         return String(userId);
       }
     } catch (error) {
@@ -55,7 +44,6 @@ const getCurrentUserId = () => {
     }
   }
 
-  console.error("getCurrentUserId - User ID topilmadi");
   throw new Error("User ID topilmadi");
 };
 
@@ -83,16 +71,12 @@ const formatDataForServer = (data) => {
 // Fetch complete user profile (all data in one request)
 export const fetchCompleteUserProfile = async (userId) => {
   try {
-    console.log("Fetching complete user profile for userId:", userId);
-
     // Make request without authentication headers for public access
     const response = await request.get(`/users/profile/${userId}`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-
-    console.log("Complete profile response:", response.data);
 
     if (response.data && response.data.data && response.data.data.user) {
       const userData = response.data.data.user;
@@ -130,8 +114,6 @@ export const fetchCompleteUserProfile = async (userId) => {
 
 // User Profile APIs - using /users/profile/userId endpoint
 export const fetchUserProfile = async (userId) => {
-  console.log("fetchUserProfile chaqirildi, userId:", userId, typeof userId);
-
   // userId ni tekshirish va to'g'rilash
   if (!userId) {
     throw new Error("User ID kerak");
@@ -139,32 +121,22 @@ export const fetchUserProfile = async (userId) => {
 
   // Agar userId object bo'lsa, xatolik
   if (typeof userId === "object") {
-    console.error("fetchUserProfile - userId object bo'lib keldi:", userId);
     throw new Error("User ID noto'g'ri formatda");
   }
 
   // String ga o'tkazish
   const cleanUserId = String(userId).trim();
-  console.log("Tozalangan userId:", cleanUserId);
 
   const response = await request.get(`/users/profile/${cleanUserId}`);
-  console.log("fetchUserProfile response:", response.data);
   return response.data.data.user;
 };
 
 export const fetchUserProfileById = async (userId) => {
-  console.log(
-    "fetchUserProfileById chaqirildi, userId:",
-    userId,
-    typeof userId
-  );
-
   if (!userId) {
     throw new Error("User ID kerak");
   }
 
   if (typeof userId === "object") {
-    console.error("fetchUserProfileById - userId object bo'lib keldi:", userId);
     throw new Error("User ID noto'g'ri formatda");
   }
 
@@ -182,9 +154,7 @@ export const updateUserProfile = async (data) => {
     });
     return response.data.data || response.data;
   } else {
-    console.log("JSON data:", data);
     const formattedData = formatDataForServer(data);
-    console.log("Formatted data:", formattedData);
 
     const response = await request.put("/users/profile", formattedData, {
       headers: {
@@ -198,9 +168,7 @@ export const updateUserProfile = async (data) => {
 // Private Info APIs
 export const fetchPrivateInfo = async () => {
   try {
-    console.log("fetchPrivateInfo chaqirildi");
     const response = await request.get("/users/private-info");
-    console.log("Private info response:", response.data);
 
     // Response structure'ni tekshirish
     if (response.data.data && response.data.data.privateInfo) {
@@ -216,13 +184,11 @@ export const fetchPrivateInfo = async () => {
   } catch (error) {
     console.error("Private info error:", error);
     if (error.response?.status === 404) {
-      console.log("Private info topilmadi, user ID bilan urinish");
       try {
         const userId = getCurrentUserId();
         const response = await request.get(`/users/private-info/${userId}`);
         return response.data.data || response.data;
       } catch (err) {
-        console.log("User ID bilan ham topilmadi");
         return null;
       }
     }
@@ -231,9 +197,7 @@ export const fetchPrivateInfo = async () => {
 };
 
 export const createPrivateInfo = async (data) => {
-  console.log("createPrivateInfo chaqirildi:", data);
   const formattedData = formatDataForServer(data);
-  console.log("Formatted create data:", formattedData);
 
   const response = await request.post("/users/private-info", formattedData, {
     headers: {
@@ -244,9 +208,7 @@ export const createPrivateInfo = async (data) => {
 };
 
 export const updatePrivateInfo = async (data) => {
-  console.log("updatePrivateInfo chaqirildi:", data);
   const formattedData = formatDataForServer(data);
-  console.log("Formatted update data:", formattedData);
 
   // Faqat null bo'lmagan qiymatlarni yuborish
   const cleanedData = {};
@@ -255,8 +217,6 @@ export const updatePrivateInfo = async (data) => {
       cleanedData[key] = formattedData[key];
     }
   });
-
-  console.log("Cleaned data for server:", cleanedData);
 
   const response = await request.put("/users/private-info", cleanedData, {
     headers: {
@@ -267,15 +227,12 @@ export const updatePrivateInfo = async (data) => {
 };
 
 export const deletePrivateInfo = async () => {
-  console.log("deletePrivateInfo chaqirildi");
-
   try {
     const response = await request.delete("/users/private-info", {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    console.log("Delete private info response:", response.data);
     return response.data;
   } catch (error) {
     console.error("Delete private info error:", error);
@@ -299,9 +256,7 @@ export const deletePrivateInfo = async () => {
 // Education APIs
 export const fetchEducations = async () => {
   try {
-    console.log("fetchEducations chaqirildi");
     const response = await request.get("/users/educations");
-    console.log("Educations response:", response.data);
 
     if (response.data.data && Array.isArray(response.data.data)) {
       return response.data.data;
@@ -340,7 +295,6 @@ export const updateEducation = async (educationId, data) => {
 };
 
 export const deleteEducation = async (educationId) => {
-  console.log("deleteEducation chaqirildi:", educationId);
   try {
     const response = await request.delete(`/users/educations/${educationId}`);
     return response.data;
@@ -356,9 +310,7 @@ export const deleteEducation = async (educationId) => {
 // Experience APIs
 export const fetchExperiences = async () => {
   try {
-    console.log("fetchExperiences chaqirildi");
     const response = await request.get("/users/experiences");
-    console.log("Experiences response:", response.data);
 
     if (response.data.data && Array.isArray(response.data.data)) {
       return response.data.data;
@@ -397,7 +349,6 @@ export const updateExperience = async (experienceId, data) => {
 };
 
 export const deleteExperience = async (experienceId) => {
-  console.log("deleteExperience chaqirildi:", experienceId);
   try {
     const response = await request.delete(`/users/experience/${experienceId}`);
     return response.data;
@@ -413,9 +364,7 @@ export const deleteExperience = async (experienceId) => {
 // Language APIs
 export const fetchLanguages = async () => {
   try {
-    console.log("fetchLanguages chaqirildi");
     const response = await request.get("/users/languages");
-    console.log("Languages response:", response.data);
 
     if (response.data.data && Array.isArray(response.data.data)) {
       return response.data.data;
@@ -449,7 +398,6 @@ export const updateLanguage = async (languageId, data) => {
 };
 
 export const deleteLanguage = async (languageId) => {
-  console.log("deleteLanguage chaqirildi:", languageId);
   try {
     const response = await request.delete(`/users/languages/${languageId}`);
     return response.data;
@@ -465,9 +413,7 @@ export const deleteLanguage = async (languageId) => {
 // Relatives APIs
 export const fetchRelatives = async () => {
   try {
-    console.log("fetchRelatives chaqirildi");
     const response = await request.get("/users/relatives");
-    console.log("Relatives response:", response.data);
 
     if (response.data.data && Array.isArray(response.data.data)) {
       return response.data.data;
@@ -506,7 +452,6 @@ export const updateRelative = async (relativeId, data) => {
 };
 
 export const deleteRelative = async (relativeId) => {
-  console.log("deleteRelative chaqirildi:", relativeId);
   try {
     const response = await request.delete(`/users/relatives/${relativeId}`);
     return response.data;
@@ -522,11 +467,9 @@ export const deleteRelative = async (relativeId) => {
 // API functions for fetching data by specific user ID
 export const fetchPrivateInfoById = async (userId) => {
   try {
-    console.log("fetchPrivateInfoById chaqirildi, userId:", userId);
     if (!userId) return null;
 
     const response = await request.get(`/users/private-info`);
-    console.log("Private info by ID response:", response.data);
 
     if (response.data.data && response.data.data.privateInfo) {
       return response.data.data.privateInfo;
@@ -544,11 +487,9 @@ export const fetchPrivateInfoById = async (userId) => {
 
 export const fetchEducationsById = async (userId) => {
   try {
-    console.log("fetchEducationsById chaqirildi, userId:", userId);
     if (!userId) return [];
 
     const response = await request.get(`/users/educations`);
-    console.log("Educations by ID response:", response.data);
 
     if (response.data.data && Array.isArray(response.data.data)) {
       return response.data.data;
@@ -566,11 +507,9 @@ export const fetchEducationsById = async (userId) => {
 
 export const fetchExperiencesById = async (userId) => {
   try {
-    console.log("fetchExperiencesById chaqirildi, userId:", userId);
     if (!userId) return [];
 
     const response = await request.get(`/users/experiences`);
-    console.log("Experiences by ID response:", response.data);
 
     if (response.data.data && Array.isArray(response.data.data)) {
       return response.data.data;
@@ -588,11 +527,9 @@ export const fetchExperiencesById = async (userId) => {
 
 export const fetchLanguagesById = async (userId) => {
   try {
-    console.log("fetchLanguagesById chaqirildi, userId:", userId);
     if (!userId) return [];
 
     const response = await request.get(`/users/languages`);
-    console.log("Languages by ID response:", response.data);
 
     if (response.data.data && Array.isArray(response.data.data)) {
       return response.data.data;
@@ -610,11 +547,9 @@ export const fetchLanguagesById = async (userId) => {
 
 export const fetchRelativesById = async (userId) => {
   try {
-    console.log("fetchRelativesById chaqirildi, userId:", userId);
     if (!userId) return [];
 
     const response = await request.get(`/users/relatives`);
-    console.log("Relatives by ID response:", response.data);
 
     if (response.data.data && Array.isArray(response.data.data)) {
       return response.data.data;

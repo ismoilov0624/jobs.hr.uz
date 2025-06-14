@@ -40,8 +40,6 @@ export default function Jobs() {
   } = useQuery({
     queryKey: ["jobs", filters],
     queryFn: () => {
-      console.log("🔍 Query function called with filters:", filters);
-
       // Clean filters before sending to API
       const cleanFilters = {};
       Object.entries(filters).forEach(([key, value]) => {
@@ -56,7 +54,6 @@ export default function Jobs() {
         }
       });
 
-      console.log("🧹 Clean filters for API:", cleanFilters);
       return fetchJobs(cleanFilters);
     },
     keepPreviousData: true,
@@ -83,7 +80,6 @@ export default function Jobs() {
   const handleSearch = (e) => {
     e.preventDefault();
     const searchTerm = searchInput.trim();
-    console.log("🔍 Search submitted:", searchTerm);
     setFilters((prev) => ({
       ...prev,
       search: searchTerm,
@@ -92,7 +88,6 @@ export default function Jobs() {
   };
 
   const handleFilterChange = (newFilters) => {
-    console.log("🎛️ Filter changed:", newFilters);
     setFilters((prev) => ({
       ...prev,
       ...newFilters,
@@ -101,13 +96,11 @@ export default function Jobs() {
   };
 
   const handlePageChange = (page) => {
-    console.log("📄 Page changed:", page);
     setFilters((prev) => ({ ...prev, page }));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const clearFilters = () => {
-    console.log("🧹 Clearing all filters");
     const newFilters = {
       search: "",
       organizationId: "",
@@ -122,7 +115,6 @@ export default function Jobs() {
   };
 
   const clearSingleFilter = (filterKey) => {
-    console.log("🧹 Clearing single filter:", filterKey);
     if (filterKey === "search") {
       setSearchInput("");
     }
@@ -141,7 +133,6 @@ export default function Jobs() {
     filters.gender;
 
   if (error) {
-    console.error("❌ Jobs fetch error:", error);
     return (
       <div className="container">
         <div className="job-search-container">
@@ -157,9 +148,6 @@ export default function Jobs() {
   }
 
   // API javobini tekshirish
-  console.log("📊 Jobs data received:", jobsData);
-
-  // Handle different API response structures
   let jobs = [];
   let meta = {};
 
@@ -177,9 +165,6 @@ export default function Jobs() {
       jobs = jobsData;
     }
   }
-
-  console.log("📋 Processed jobs:", jobs);
-  console.log("📊 Meta data:", meta);
 
   return (
     <div className="container">

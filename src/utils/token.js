@@ -29,8 +29,6 @@ export const getUserIdFromToken = (token) => {
   const decoded = decodeToken(token);
   if (!decoded) return null;
 
-  console.log("Decoded token:", decoded); // Debug uchun
-
   // Odatda JWT'da user ID quyidagi nomlar bilan bo'ladi
   return (
     decoded.userId ||

@@ -22,10 +22,6 @@ const Overview = () => {
     refetchOnWindowFocus: false,
   });
 
-  console.log("Overview - Raw data:", data);
-  console.log("Overview - Is loading:", isLoading);
-  console.log("Overview - Error:", error);
-
   // Handle different response structures more carefully
   let applications = [];
 
@@ -40,8 +36,6 @@ const Overview = () => {
       applications = data.data;
     }
   }
-
-  console.log("Overview - Processed applications:", applications);
 
   const getApplicationStats = () => {
     if (!Array.isArray(applications)) {

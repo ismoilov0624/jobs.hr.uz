@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import Cookies from "js-cookie"; // Tokenni olish uchun
 
 export const Header = () => {
-  const { t, i18n } = useTranslation();
+  // const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 

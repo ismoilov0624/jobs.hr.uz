@@ -193,8 +193,6 @@ export const ProfileInfo = () => {
   }
 
   const avatarUrl = getAvatarUrl(profile?.avatar);
-  console.log("Avatar URL:", avatarUrl); // Debug uchun
-  console.log("Profile avatar:", profile?.avatar); // Debug uchun
 
   return (
     <div className="profile-section-container">

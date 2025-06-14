@@ -43,7 +43,6 @@ export const ForgotPassword = () => {
       { phone: cleanPhone },
       {
         onSuccess: (res) => {
-          console.log("Success:", res);
           setIsCodeSent(true);
           toast.success("Tasdiqlash kodi Telegram botga yuborildi", {
             position: "top-right",
@@ -51,7 +50,6 @@ export const ForgotPassword = () => {
           });
         },
         onError: (error) => {
-          console.error("Error:", error);
           const errorMessage =
             error?.response?.data?.message || "Xatolik yuz berdi";
           toast.error(errorMessage, {
@@ -101,7 +99,6 @@ export const ForgotPassword = () => {
           }
         },
         onError: (error) => {
-          console.error("Verification Error:", error);
           const errorMessage =
             error?.response?.data?.message || "Noto'g'ri kod kiritildi";
           toast.error(errorMessage, {
