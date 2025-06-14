@@ -27,7 +27,7 @@ const createPdfFilename = (userData) => {
 
   if (nameParts.length === 0) return "resume.pdf";
 
-  return `${nameParts.join("_")}_resume.pdf`;
+  return `${nameParts.join(" ")} resume.pdf`;
 };
 
 const DownloadResumeButton = ({

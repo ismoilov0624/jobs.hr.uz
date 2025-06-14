@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
+import logo from "../../assets/logo.png";
 
 // PDF uchun stillar
 const styles = StyleSheet.create({
@@ -261,7 +262,7 @@ const ResumePDF = ({
         {/* Header with Logo and Profile Image */}
         <View style={styles.header}>
           <View style={styles.logoSection}>
-            <Image style={styles.logo} src="/src/assets/logo.png" />
+            <Image style={styles.logo} src={logo} />
           </View>
           <View style={styles.titleSection}>
             <Text style={styles.title}>MA'LUMOTNOMA</Text>
