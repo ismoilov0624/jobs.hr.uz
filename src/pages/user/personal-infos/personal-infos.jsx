@@ -223,7 +223,6 @@ const PersonalInfos = () => {
             {/* Personal Information */}
             <div className="info-card">
               <div className="card-header">
-                <MapPin size={20} />
                 <h3>Shaxsiy ma'lumotlar</h3>
               </div>
               <div className="card-content">
