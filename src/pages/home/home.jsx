@@ -56,7 +56,7 @@ export const Home = () => {
               </h3>
               <p>
                 Platformamiz orqali siz eng so'nggi, ishonchli va malakangizga
-                mos ish e'lonlarini topishingiz mumkin. Jobs HR 2023-yilda ishga
+                mos ish e'lonlarini topishingiz mumkin. Jobs HR 2025-yilda ishga
                 tushirilgan bo'lib, qisqa vaqt ichida minglab foydalanuvchilar
                 ishonchini qozondi. Bizning maqsadimiz — O'zbekiston bo'ylab
                 ishga joylashish jarayonini soddalashtirish va tezlashtirish.
