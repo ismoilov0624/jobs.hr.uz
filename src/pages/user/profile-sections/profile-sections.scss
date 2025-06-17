@@ -934,11 +934,6 @@ $transition: all 0.2s ease-in-out;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-
-    &::before {
-      content: "👤";
-      font-size: 1.5rem;
-    }
   }
 }
 
