@@ -94,13 +94,11 @@ export const Experience = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Haqiqatan ham bu ish tajribasini o'chirmoqchimisiz?")) {
-      try {
-        await deleteExperienceMutation.mutateAsync(id);
-        toast.success("Ish tajribasi o'chirildi!");
-      } catch (error) {
-        toast.error("Ish tajribasini o'chirishda xatolik yuz berdi");
-      }
+    try {
+      await deleteExperienceMutation.mutateAsync(id);
+      toast.success("Ish tajribasi o'chirildi!");
+    } catch (error) {
+      toast.error("Ish tajribasini o'chirishda xatolik yuz berdi");
     }
   };
 

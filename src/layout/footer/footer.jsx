@@ -1,14 +1,37 @@
 import React from "react";
-import "./footer.scss";
 import { Link } from "react-router-dom";
+import "./footer.scss";
+
 import logo from "../../assets/logo.png";
 import telegram from "../../assets/telegram.svg";
 import facebook from "../../assets/facebook.svg";
 import qrcode from "../../assets/qrcode.png";
+import logoP from "../../assets/logo-p.png";
+import gerb from "../../assets/gerb.png";
 
 export const Footer = () => {
   return (
     <footer className="footer">
+      {/* Prokuratura tashabbusi banner */}
+      <div className="footer__prosecutor-banner">
+        <div className="footer__prosecutor-content">
+          <img
+            src={logoP || "/placeholder.svg"}
+            alt="Prokuratura gerbi"
+            className="footer__prosecutor-logo"
+          />
+          <img
+            src={gerb || "/placeholder.svg"}
+            alt="Prokuratura gerbi"
+            className="footer__prosecutor-logo"
+          />
+          <p className="footer__prosecutor-text">
+            Ushbu platforma O'zbekiston Respublikasi Andijon viloyati Asaka
+            tumani prokuraturasi va Asaka tumani hokimligi tashabbusi bilan
+            joriy etildi.
+          </p>
+        </div>
+      </div>
       <div className="footer__container">
         <Link to="/">
           <div className="header__logo">

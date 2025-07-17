@@ -14,7 +14,69 @@ export const fetchJobs = async (params = {}) => {
 
     const response = await request.get("/jobs", { params: cleanParams });
 
-    return response.data;
+    // Filter out jobs with endDate up to June 30, 2025
+    const filterDate = new Date("2025-06-30T23:59:59");
+
+    let filteredData = response.data;
+
+    // Handle different response structures and filter jobs
+    if (response.data?.data?.jobs && Array.isArray(response.data.data.jobs)) {
+      const filteredJobs = response.data.data.jobs.filter((job) => {
+        if (!job.endDate) return true; // Keep jobs without endDate
+        const jobEndDate = new Date(job.endDate);
+        return jobEndDate > filterDate; // Keep jobs with endDate after June 30, 2025
+      });
+
+      filteredData = {
+        ...response.data,
+        data: {
+          ...response.data.data,
+          jobs: filteredJobs,
+          meta: {
+            ...response.data.data.meta,
+            totalCount: filteredJobs.length,
+          },
+        },
+      };
+    } else if (response.data?.data && Array.isArray(response.data.data)) {
+      const filteredJobs = response.data.data.filter((job) => {
+        if (!job.endDate) return true;
+        const jobEndDate = new Date(job.endDate);
+        return jobEndDate > filterDate;
+      });
+
+      filteredData = {
+        ...response.data,
+        data: filteredJobs,
+        meta: {
+          ...response.data.meta,
+          totalCount: filteredJobs.length,
+        },
+      };
+    } else if (Array.isArray(response.data.jobs)) {
+      const filteredJobs = response.data.jobs.filter((job) => {
+        if (!job.endDate) return true;
+        const jobEndDate = new Date(job.endDate);
+        return jobEndDate > filterDate;
+      });
+
+      filteredData = {
+        ...response.data,
+        jobs: filteredJobs,
+        meta: {
+          ...response.data.meta,
+          totalCount: filteredJobs.length,
+        },
+      };
+    } else if (Array.isArray(response.data)) {
+      filteredData = response.data.filter((job) => {
+        if (!job.endDate) return true;
+        const jobEndDate = new Date(job.endDate);
+        return jobEndDate > filterDate;
+      });
+    }
+
+    return filteredData;
   } catch (error) {
     throw error;
   }

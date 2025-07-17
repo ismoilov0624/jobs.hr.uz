@@ -58,6 +58,8 @@
     z-index: 9;
     overflow-y: auto;
     max-height: calc(100vh - 103px);
+    position: sticky !important;
+    top: 103px;
     position: relative;
 
     @media (max-width: 1200px) {
@@ -182,6 +184,13 @@
     padding: 0;
     width: 100%;
     min-width: 0;
+  }
+
+  @media (max-width: 430px) {
+    &__sidebar {
+      top: 80px;
+      max-height: calc(100vh - 80px);
+    }
   }
 }
 

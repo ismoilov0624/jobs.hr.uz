@@ -526,12 +526,12 @@ const PersonalInfos = () => {
                       <div className="data-table">
                         <table>
                           <tbody>
-                            <tr>
+                            {/* <tr>
                               <td className="label">ID:</td>
                               <td className="value">
                                 {formatValue(userData?.id)}
                               </td>
-                            </tr>
+                            </tr> */}
                             <tr>
                               <td className="label">Ism:</td>
                               <td className="value">

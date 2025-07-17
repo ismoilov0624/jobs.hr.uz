@@ -94,15 +94,11 @@ export const Education = () => {
   };
 
   const handleDelete = async (id) => {
-    if (
-      window.confirm("Haqiqatan ham bu ta'lim ma'lumotini o'chirmoqchimisiz?")
-    ) {
-      try {
-        await deleteEducationMutation.mutateAsync(id);
-        toast.success("Ta'lim ma'lumoti o'chirildi!");
-      } catch (error) {
-        toast.error("Ta'lim ma'lumotini o'chirishda xatolik yuz berdi");
-      }
+    try {
+      await deleteEducationMutation.mutateAsync(id);
+      toast.success("Ta'lim ma'lumoti o'chirildi!");
+    } catch (error) {
+      toast.error("Ta'lim ma'lumotini o'chirishda xatolik yuz berdi");
     }
   };
 

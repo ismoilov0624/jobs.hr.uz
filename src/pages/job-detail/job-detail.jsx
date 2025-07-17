@@ -5,7 +5,6 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   MapPin,
   Building,
-  DollarSign,
   Users,
   Calendar,
   ArrowLeft,
@@ -15,7 +14,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useScrollTop } from "../../hooks/useScrollTop";
 import { fetchJobById, applyForJob } from "../../services/api/jobs";
-import { useUserProfile } from "../../hooks/useUser";
+import { useUserProfile, usePrivateInfo } from "../../hooks/useUser";
 import {
   formatJobType,
   formatWorkLocation,
@@ -46,26 +45,54 @@ const JobDetail = () => {
   });
 
   const { data: userProfile } = useUserProfile();
+  const { data: privateInfo } = usePrivateInfo();
 
   const checkProfileCompleteness = () => {
-    if (!userProfile) {
+    if (!userProfile || !privateInfo) {
       return false;
     }
 
-    // Required fields'ni tekshirish
-    const requiredFields = {
+    // UserProfile dagi barcha kerakli fieldlarni tekshirish
+    const requiredProfileFields = {
       firstName: userProfile.firstName,
       lastName: userProfile.lastName,
+      fatherName: userProfile.fatherName,
+      status: userProfile.status,
       phoneNumber: userProfile.phoneNumber,
+      nationality: userProfile.nationality,
       address: userProfile.address,
+      specialty: userProfile.specialty,
+      avatar: userProfile.avatar,
     };
 
-    const isComplete = Object.entries(requiredFields).every(([key, value]) => {
-      const isValid = value && String(value).trim() !== "";
-      return isValid;
-    });
+    // PrivateInfo dagi barcha kerakli fieldlarni tekshirish
+    const requiredPrivateFields = {
+      gender: privateInfo.gender,
+      region: privateInfo.region,
+      district: privateInfo.district,
+      citizenship: privateInfo.citizenship,
+      birthDate: privateInfo.birthDate,
+      birthPlace: privateInfo.birthPlace,
+    };
 
-    return isComplete;
+    // UserProfile fieldlarini tekshirish
+    const isProfileComplete = Object.entries(requiredProfileFields).every(
+      ([key, value]) => {
+        return value && String(value).trim() !== "";
+      }
+    );
+
+    // PrivateInfo fieldlarini tekshirish
+    const isPrivateInfoComplete = Object.entries(requiredPrivateFields).every(
+      ([key, value]) => {
+        return value && String(value).trim() !== "";
+      }
+    );
+
+    // PrivateInfo mavjudligini tekshirish (id bor bo'lishi kerak)
+    const hasPrivateInfo = privateInfo && privateInfo.id !== undefined;
+
+    return isProfileComplete && isPrivateInfoComplete && hasPrivateInfo;
   };
 
   const handleApply = async () => {
@@ -76,7 +103,9 @@ const JobDetail = () => {
     }
 
     if (!checkProfileCompleteness()) {
-      toast.warning("Ariza topshirish uchun avval profilingizni to'ldiring");
+      toast.warning(
+        "Ariza topshirish uchun avval profil va shaxsiy ma'lumotlaringizni to'liq to'ldiring"
+      );
       navigate("/profile/edit-profile");
       return;
     }
@@ -183,10 +212,10 @@ const JobDetail = () => {
                     <Calendar size={18} />
                     <span>E'lon qilingan: {formatDate(job.createdAt)}</span>
                   </div>
-                  <div className="stat-item">
+                  {/* <div className="stat-item">
                     <Users size={18} />
                     <span>Hozircha ariza topshirilmagan</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

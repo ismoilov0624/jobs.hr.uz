@@ -84,13 +84,11 @@ export const Languages = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Haqiqatan ham bu tilni o'chirmoqchimisiz?")) {
-      try {
-        await deleteLanguageMutation.mutateAsync(id);
-        toast.success("Til o'chirildi!");
-      } catch (error) {
-        toast.error("Tilni o'chirishda xatolik yuz berdi");
-      }
+    try {
+      await deleteLanguageMutation.mutateAsync(id);
+      toast.success("Til o'chirildi!");
+    } catch (error) {
+      toast.error("Tilni o'chirishda xatolik yuz berdi");
     }
   };
 

@@ -56,11 +56,11 @@ export const ProfileInfo = () => {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // File size tekshirish (10 MB = 10 * 1024 * 1024 bytes)
-      const maxSize = 10 * 1024 * 1024; // 10 MB
+      // File size tekshirish - mobil uchun kattaroq limit
+      const maxSize = 15 * 1024 * 1024; // 15 MB
 
       if (file.size > maxSize) {
-        toast.error("Rasm hajmi 10 MB dan oshmasligi kerak!", {
+        toast.error("Rasm hajmi 15 MB dan oshmasligi kerak!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -68,22 +68,24 @@ export const ProfileInfo = () => {
           pauseOnHover: true,
           draggable: true,
         });
-        // Input ni tozalash
         e.target.value = "";
         return;
       }
 
-      // File type tekshirish
+      // Kengaytirilgan file type tekshirish
       const allowedTypes = [
         "image/jpeg",
         "image/jpg",
         "image/png",
         "image/gif",
         "image/webp",
+        "image/heic", // iPhone rasmlar uchun
+        "image/heif", // iPhone rasmlar uchun
       ];
-      if (!allowedTypes.includes(file.type)) {
+
+      if (!allowedTypes.includes(file.type.toLowerCase())) {
         toast.error(
-          "Faqat rasm fayllari (JPEG, PNG, GIF, WebP) qabul qilinadi!",
+          "Faqat rasm fayllari (JPEG, PNG, GIF, WebP, HEIC) qabul qilinadi!",
           {
             position: "top-right",
             autoClose: 5000,
@@ -97,10 +99,21 @@ export const ProfileInfo = () => {
         return;
       }
 
+      console.log("Selected file:", {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      });
+
       setAvatarFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setAvatarPreview(reader.result);
+      };
+      reader.onerror = () => {
+        toast.error("Rasmni o'qishda xatolik yuz berdi");
+        setAvatarFile(null);
+        setAvatarPreview(null);
       };
       reader.readAsDataURL(file);
 
@@ -140,9 +153,11 @@ export const ProfileInfo = () => {
           formData.append(key, changedData[key]);
         });
 
-        formData.append("avatar", avatarFile);
+        formData.append("avatar", avatarFile, avatarFile.name);
 
         console.log("FormData with avatar being sent");
+        console.log("Avatar file:", avatarFile);
+
         await updateProfileMutation.mutateAsync(formData);
       } else {
         // Faqat JSON ma'lumotlarni yuborish
@@ -159,8 +174,16 @@ export const ProfileInfo = () => {
       setAvatarPreview(null);
       setAvatarFile(null);
     } catch (error) {
-      toast.error("Profilni yangilashda xatolik yuz berdi");
       console.error("Update error:", error);
+      console.error("Error response:", error.response?.data);
+
+      if (error.response?.status === 413) {
+        toast.error("Rasm hajmi juda katta. Kichikroq rasm tanlang.");
+      } else if (error.response?.status === 415) {
+        toast.error("Rasm formati qo'llab-quvvatlanmaydi.");
+      } else {
+        toast.error("Profilni yangilashda xatolik yuz berdi");
+      }
     }
   };
 
@@ -259,7 +282,7 @@ export const ProfileInfo = () => {
                       <Camera size={20} />
                       <input
                         type="file"
-                        accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                        accept="image/jpeg,image/jpg,image/png,image/gif,image/webp,image/heic,image/heif"
                         onChange={handleAvatarChange}
                         style={{ display: "none" }}
                       />

@@ -102,14 +102,6 @@ export const PrivateInfo = () => {
 
   // Ma'lumotni o'chirish uchun DELETE so'rov
   const handleDelete = async () => {
-    if (
-      !window.confirm(
-        "Haqiqatan ham shaxsiy ma'lumotlarni o'chirishni xohlaysizmi?"
-      )
-    ) {
-      return;
-    }
-
     try {
       setIsDeleting(true);
       await deletePrivateInfo();

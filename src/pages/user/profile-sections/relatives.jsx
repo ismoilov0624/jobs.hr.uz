@@ -105,17 +105,11 @@ export const Relatives = () => {
   };
 
   const handleDelete = async (id) => {
-    if (
-      window.confirm(
-        "Haqiqatan ham bu qarindosh ma'lumotini o'chirmoqchimisiz?"
-      )
-    ) {
-      try {
-        await deleteRelativeMutation.mutateAsync(id);
-        toast.success("Qarindosh ma'lumoti o'chirildi!");
-      } catch (error) {
-        toast.error("Qarindosh ma'lumotini o'chirishda xatolik yuz berdi");
-      }
+    try {
+      await deleteRelativeMutation.mutateAsync(id);
+      toast.success("Qarindosh ma'lumoti o'chirildi!");
+    } catch (error) {
+      toast.error("Qarindosh ma'lumotini o'chirishda xatolik yuz berdi");
     }
   };
 

@@ -120,4 +120,41 @@
       height: 100px;
     }
   }
+
+  &__prosecutor-banner {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+
+    .footer__prosecutor-content {
+      max-width: 1000px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .footer__prosecutor-logo {
+      width: 50px;
+      height: auto;
+
+      @media (max-width: 600px) {
+        width: 40px;
+      }
+    }
+
+    .footer__prosecutor-text {
+      font-size: 14px;
+      color: #444;
+      max-width: 600px;
+
+      @media (max-width: 600px) {
+        font-size: 13px;
+      }
+    }
+  }
 }

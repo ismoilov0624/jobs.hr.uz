@@ -23,12 +23,12 @@ const JobCard = ({ job }) => {
       <div className="job-card-header">
         <div className="job-info">
           <h3 className="job-title">{job.title}</h3>
-          <div className="job-meta">
+          {/* <div className="job-meta">
             <span className="application-count">
               <Users size={14} />
               Hozircha ariza topshirilmagan
             </span>
-          </div>
+          </div> */}
           <div className="job-tags">
             <span className={`job-tag ${job.type.toLowerCase()}`}>
               {formatJobType(job.type)}
