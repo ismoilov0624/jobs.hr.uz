@@ -25,7 +25,7 @@ const BurgerMenu = ({ isLoggedIn }) => {
         Biz haqimizda
       </Link>
       <Link onClick={closeMenu} className="menu-item" to="/jobs">
-        Vakansiyalar
+        Bo'sh ish o'rinlari
       </Link>
       <Link onClick={closeMenu} className="menu-item" to="/companies">
         Tashkilotlar

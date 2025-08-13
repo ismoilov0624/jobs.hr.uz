@@ -216,11 +216,17 @@ export const EditProfile = () => {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        );
+
       // File size tekshirish - mobil uchun kattaroq limit
-      const maxSize = 15 * 1024 * 1024; // 15 MB (mobil rasmlar uchun)
+      const maxSize = isMobile ? 25 * 1024 * 1024 : 15 * 1024 * 1024; // 25 MB mobil, 15 MB desktop
 
       if (file.size > maxSize) {
-        toast.error("Rasm hajmi 15 MB dan oshmasligi kerak!");
+        const maxSizeMB = isMobile ? 25 : 15;
+        toast.error(`Rasm hajmi ${maxSizeMB} MB dan oshmasligi kerak!`);
         e.target.value = "";
         return;
       }
@@ -244,10 +250,12 @@ export const EditProfile = () => {
         return;
       }
 
-      console.log("Selected file:", {
+      console.log("Avatar upload attempt:", {
         name: file.name,
         size: file.size,
         type: file.type,
+        isMobile: isMobile,
+        userAgent: navigator.userAgent,
       });
 
       setAvatarFile(file);
@@ -261,7 +269,10 @@ export const EditProfile = () => {
         );
       };
       reader.onerror = () => {
-        toast.error("Rasmni o'qishda xatolik yuz berdi");
+        const errorMsg = isMobile
+          ? "Mobil qurilmada rasmni o'qishda xatolik. Boshqa rasm tanlang."
+          : "Rasmni o'qishda xatolik yuz berdi";
+        toast.error(errorMsg);
         setAvatarFile(null);
         setAvatarPreview(null);
       };
@@ -288,6 +299,11 @@ export const EditProfile = () => {
 
         const formData = new FormData();
 
+        const isMobile =
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent
+          );
+
         // Add all form fields
         Object.keys(formattedData).forEach((key) => {
           if (
@@ -299,14 +315,20 @@ export const EditProfile = () => {
           }
         });
 
-        // Add avatar file
-        formData.append("avatar", avatarFile, avatarFile.name);
-
-        // Log FormData contents for debugging
-        console.log("FormData contents:");
-        for (const [key, value] of formData.entries()) {
-          console.log(key, value);
+        if (isMobile) {
+          // Create a new Blob for mobile compatibility
+          const blob = new Blob([avatarFile], { type: avatarFile.type });
+          formData.append("avatar", blob, avatarFile.name);
+        } else {
+          formData.append("avatar", avatarFile, avatarFile.name);
         }
+
+        console.log("FormData upload details:", {
+          isMobile: isMobile,
+          fileSize: avatarFile.size,
+          fileType: avatarFile.type,
+          fileName: avatarFile.name,
+        });
 
         await updateProfileMutation.mutateAsync(formData);
       } else {
@@ -319,15 +341,54 @@ export const EditProfile = () => {
       setAvatarPreview(null);
       setAvatarFile(null);
     } catch (error) {
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        );
+
       console.error("Profile update error:", error);
       console.error("Error response:", error.response?.data);
+      console.error("Mobile device:", isMobile);
+      console.error("Network status:", navigator.onLine ? "Online" : "Offline");
 
       if (error.response?.status === 413) {
-        toast.error("Rasm hajmi juda katta. Kichikroq rasm tanlang.");
+        const message = isMobile
+          ? "Rasm hajmi juda katta. Mobil qurilmada kichikroq rasm tanlang yoki rasmni siqing."
+          : "Rasm hajmi juda katta. Kichikroq rasm tanlang.";
+        toast.error(message);
       } else if (error.response?.status === 415) {
-        toast.error("Rasm formati qo'llab-quvvatlanmaydi.");
+        const message = isMobile
+          ? "Rasm formati qo'llab-quvvatlanmaydi. JPEG yoki PNG formatida rasm tanlang."
+          : "Rasm formati qo'llab-quvvatlanmaydi.";
+        toast.error(message);
+      } else if (error.response?.status === 400) {
+        toast.error(
+          "Ma'lumotlar noto'g'ri. Barcha maydonlarni to'g'ri to'ldiring."
+        );
+      } else if (error.response?.status === 500) {
+        const message = isMobile
+          ? "Server xatoligi. Mobil internetni tekshiring va qayta urinib ko'ring."
+          : "Server xatoligi yuz berdi. Qayta urinib ko'ring.";
+        toast.error(message);
+      } else if (!navigator.onLine) {
+        toast.error("Internet aloqasi yo'q. Internetni tekshiring.");
+      } else if (isMobile && error.code === "NETWORK_ERROR") {
+        toast.error(
+          "Mobil internetda xatolik. Wi-Fi yoki mobil internetni tekshiring."
+        );
       } else {
-        toast.error("Asosiy ma'lumotlarni yangilashda xatolik yuz berdi");
+        const message = isMobile
+          ? "Mobil qurilmada ma'lumotlarni yangilashda xatolik. Internetni tekshiring va qayta urinib ko'ring."
+          : "Asosiy ma'lumotlarni yangilashda xatolik yuz berdi";
+        toast.error(message);
+
+        if (isMobile) {
+          setTimeout(() => {
+            toast.info(
+              "Maslahat: Kichikroq rasm tanlang yoki Wi-Fi orqali urinib ko'ring."
+            );
+          }, 2000);
+        }
       }
     } finally {
       setLoading("profile", false);
