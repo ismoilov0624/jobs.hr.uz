@@ -5,18 +5,26 @@ import {
   Document,
   StyleSheet,
   Image,
+  Font,
 } from "@react-pdf/renderer";
 import logo from "../../assets/logo.png";
+import Roboto from "../../fonts/Roboto-Regular.ttf"; // 🔑 TTF faylni shu papkaga qo‘shing
+
+// Kirilcha uchun shriftni ro‘yxatdan o‘tkazish
+Font.register({
+  family: "Roboto",
+  src: Roboto,
+});
 
 // PDF uchun stillar
 const styles = StyleSheet.create({
   page: {
     paddingTop: 30,
     paddingBottom: 30,
-    paddingLeft: 57, // 2cm margin
-    paddingRight: 57, // 2cm margin
+    paddingLeft: 57,
+    paddingRight: 57,
     fontSize: 11,
-    fontFamily: "Helvetica",
+    fontFamily: "Roboto", // 🔑 Shriftni Roboto qilib o‘zgartirdim
     lineHeight: 1.4,
   },
   header: {
@@ -157,7 +165,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// Ma'lumotlarni formatlash funksiyalari
+// Formatlash funksiyalari
 const formatDate = (dateString) => {
   if (!dateString) return "Noma'lum";
   try {
@@ -199,28 +207,21 @@ const getAvatarUrl = (avatar, isViewMode = false) => {
     return null;
   }
 
-  // Admin view uchun (userId bilan)
   if (isViewMode) {
-    // Agar fayl nomi bo'lsa, to'liq URL yaratamiz
     if (typeof avatar === "string" && !avatar.startsWith("http")) {
       return `https://api.sahifam.uz/uploads/${avatar}`;
     }
-
-    // Agar allaqachon to'liq URL bo'lsa
     if (avatar.startsWith("http")) {
       return avatar;
     }
   } else {
-    // Regular user view uchun
     if (typeof avatar === "string" && !avatar.startsWith("http")) {
       return `https://api.sahifam.uz/uploads/${avatar}`;
     }
-
     if (avatar.startsWith("http")) {
       return avatar;
     }
   }
-
   return null;
 };
 
@@ -231,9 +232,8 @@ const ResumePDF = ({
   experiences = [],
   languages = [],
   relatives = [],
-  isViewMode = false, // Admin view yoki regular user view
+  isViewMode = false,
 }) => {
-  // To'liq ism yaratish
   const fullName = [
     formatValue(userData?.lastName),
     formatValue(userData?.firstName),
@@ -242,7 +242,6 @@ const ResumePDF = ({
     .filter((name) => name !== "Noma'lum")
     .join(" ");
 
-  // Joriy lavozim (eng oxirgi ish tajribasi)
   const currentPosition =
     experiences && experiences.length > 0
       ? experiences.find((exp) => exp.isPresent)?.position ||
@@ -255,14 +254,11 @@ const ResumePDF = ({
         experiences[0]?.organization
       : "Noma'lum";
 
-  // Avatar URL olish (view mode ga qarab)
   const avatarUrl = getAvatarUrl(userData?.avatar, isViewMode);
 
   return (
     <Document>
-      {/* Birinchi sahifa - Asosiy ma'lumotlar */}
       <Page size="A4" style={styles.page}>
-        {/* Header with Logo and Profile Image */}
         <View style={styles.header}>
           <View style={styles.logoSection}>
             <Image style={styles.logo} src={logo || "/placeholder.svg"} />
@@ -293,11 +289,11 @@ const ResumePDF = ({
         <View style={styles.section}>
           <View style={styles.row}>
             <View style={styles.leftColumn}>
-              <Text style={styles.label}>Tug'ilgan yili:</Text>
+              <Text style={styles.label}>Tug‘ilgan yili:</Text>
               <Text>{formatDate(privateInfo?.birthDate)}</Text>
             </View>
             <View style={styles.rightColumn}>
-              <Text style={styles.label}>Tug'ilgan joyi:</Text>
+              <Text style={styles.label}>Tug‘ilgan joyi:</Text>
               <Text>{formatValue(privateInfo?.birthPlace)}</Text>
             </View>
           </View>
@@ -316,7 +312,7 @@ const ResumePDF = ({
           {educations && educations.length > 0 && (
             <View style={styles.row}>
               <View style={styles.leftColumn}>
-                <Text style={styles.label}>Ma'lumoti:</Text>
+                <Text style={styles.label}>Ma’lumoti:</Text>
                 <Text>{formatValue(educations[0]?.degree)}</Text>
               </View>
               <View style={styles.rightColumn}>
@@ -333,7 +329,7 @@ const ResumePDF = ({
             <View style={styles.row}>
               <View style={styles.leftColumn}>
                 <Text style={styles.label}>
-                  Ma'lumoti bo'yicha mutaxassisligi:
+                  Ma’lumoti bo‘yicha mutaxassisligi:
                 </Text>
                 <Text>{formatValue(educations[0]?.fieldOfStudy)}</Text>
               </View>
@@ -346,7 +342,7 @@ const ResumePDF = ({
               <Text>{formatValue(userData?.address)}</Text>
             </View>
             <View style={styles.rightColumn}>
-              <Text style={styles.label}>Qaysi chet tillarini biladi:</Text>
+              <Text style={styles.label}>Qaysi chet tillarni biladi:</Text>
               <Text>
                 {languages && languages.length > 0
                   ? languages.map((lang) => lang.language).join(", ")
@@ -386,10 +382,10 @@ const ResumePDF = ({
           </View>
         )}
 
-        {/* Ta'lim */}
+        {/* Ta’lim */}
         {educations && educations.length > 1 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>TA'LIM</Text>
+            <Text style={styles.sectionTitle}>TA’LIM</Text>
             {educations.map((edu, index) => (
               <View key={index} style={styles.workExperience}>
                 <Text style={styles.workPeriod}>
@@ -408,12 +404,12 @@ const ResumePDF = ({
         )}
       </Page>
 
-      {/* Ikkinchi sahifa - Qarindoshlar ma'lumoti */}
+      {/* Qarindoshlar ma’lumoti */}
       {relatives && relatives.length > 0 && (
         <Page size="A4" style={styles.page}>
           <View style={styles.section}>
             <Text style={styles.relativesTitle}>
-              {fullName}ning yaqin qarindoshlari haqida MA'LUMOT
+              {fullName}ning yaqin qarindoshlari haqida MA’LUMOT
             </Text>
 
             <View style={styles.table}>
@@ -423,7 +419,7 @@ const ResumePDF = ({
                   Familiyasi, ismi va otasining ismi
                 </Text>
                 <Text style={styles.tableCellHeader}>
-                  Tug'ilgan yili va joyi
+                  Tug‘ilgan yili va joyi
                 </Text>
                 <Text style={styles.tableCellHeader}>Ish joyi</Text>
                 <Text style={styles.tableCellHeader}>Turar joyi</Text>

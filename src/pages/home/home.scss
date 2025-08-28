@@ -20,60 +20,66 @@
   }
 }
 
+@keyframes floatImage {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1) translateY(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.2) translateY(-20px);
+    opacity: 0.9;
+  }
+}
+
 .home {
   margin-top: 103px;
+
   @media (max-width: 430px) {
     margin-top: 80px;
   }
-  .home__prosecutor-banner {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border: 1px solid #dee2e6;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
 
-  .home__prosecutor-content {
-    display: flex;
-    align-items: center;
-    max-width: 100%;
-  }
-
-  .home__prosecutor-logo {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
-    flex-shrink: 0;
-  }
-
-  .home__prosecutor-text {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #495057;
-    margin: 0;
-    font-weight: 500;
-  }
-
-  @media (max-width: 768px) {
-    .home__prosecutor-content {
-      flex-direction: column;
-      text-align: center;
-      gap: 15px;
-    }
-
-    .home__prosecutor-logo {
-      width: 50px;
-      height: 50px;
-    }
-
-    .home__prosecutor-text {
-      font-size: 13px;
-    }
-  }
-
+  // 🌟 Hero Section
   &__hero {
-    background-color: #fafafa;
-    padding: 3rem 0;
+    position: relative;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+    overflow: hidden;
+    padding: 5rem 0;
+
+    // Dekorativ animated circles
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 86, 179, 0.08);
+      animation: pulse 8s infinite alternate;
+    }
+
+    &::before {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      left: -100px;
+    }
+
+    &::after {
+      width: 200px;
+      height: 200px;
+      bottom: -50px;
+      right: -50px;
+    }
   }
 
   &__wrapper {
@@ -89,48 +95,59 @@
   }
 
   &__text {
+    max-width: 550px;
     animation: fadeInUp 1s ease forwards;
     opacity: 0;
 
     h1 {
       font-size: 3rem;
       margin-bottom: 1rem;
-      color: #222;
+      font-weight: 700;
+      background: linear-gradient(90deg, #0056b3, #00aaff);
+      -webkit-background-clip: text; /* Safari, Chrome */
+      background-clip: text; /* Standard property */
+      -webkit-text-fill-color: transparent;
+      color: transparent; /* fallback */
     }
 
     p {
       font-size: 1.2rem;
       color: #555;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
     }
   }
 
   &__btn {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #0056b3, #0077e6);
     color: #fff;
     border: none;
-    padding: 0.8rem 1.5rem;
+    padding: 0.9rem 1.8rem;
     font-size: 1rem;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    font-weight: 500;
 
     &:hover {
-      background-color: #003f8a;
+      background: linear-gradient(135deg, #004494, #0066cc);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 86, 179, 0.3);
     }
   }
 
   &__image {
     width: 100%;
     max-width: 600px;
-    animation: slideInRight 1s ease forwards;
+    animation: slideInRight 1.2s ease forwards;
     opacity: 0;
     margin-top: 2rem;
 
     img {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 14px;
       object-fit: cover;
+      animation: floatImage 6s ease-in-out infinite;
     }
 
     @media (min-width: 768px) {
@@ -138,6 +155,7 @@
     }
   }
 
+  // 📊 Stats
   &__stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -179,28 +197,7 @@
     }
   }
 
-  @keyframes fadeInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-60px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(60px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
+  // 📖 About Section
   .home__about {
     background-color: #0056b3;
     color: white;
@@ -221,7 +218,7 @@
       .home__about__content {
         flex: 1;
         max-width: 50%;
-        animation: fadeInLeft 1s ease forwards;
+        animation: fadeInUp 1s ease forwards;
         animation-delay: 0.3s;
         opacity: 0;
 
@@ -261,6 +258,7 @@
     }
   }
 
+  // 🏢 Companies
   &__companies {
     padding: 3rem 0;
 

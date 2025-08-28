@@ -5,7 +5,6 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   MapPin,
   Building,
-  Users,
   Calendar,
   ArrowLeft,
   ExternalLink,
@@ -52,7 +51,6 @@ const JobDetail = () => {
       return false;
     }
 
-    // UserProfile dagi barcha kerakli fieldlarni tekshirish
     const requiredProfileFields = {
       firstName: userProfile.firstName,
       lastName: userProfile.lastName,
@@ -65,7 +63,6 @@ const JobDetail = () => {
       avatar: userProfile.avatar,
     };
 
-    // PrivateInfo dagi barcha kerakli fieldlarni tekshirish
     const requiredPrivateFields = {
       gender: privateInfo.gender,
       region: privateInfo.region,
@@ -75,21 +72,14 @@ const JobDetail = () => {
       birthPlace: privateInfo.birthPlace,
     };
 
-    // UserProfile fieldlarini tekshirish
     const isProfileComplete = Object.entries(requiredProfileFields).every(
-      ([key, value]) => {
-        return value && String(value).trim() !== "";
-      }
+      ([, value]) => value && String(value).trim() !== ""
     );
 
-    // PrivateInfo fieldlarini tekshirish
     const isPrivateInfoComplete = Object.entries(requiredPrivateFields).every(
-      ([key, value]) => {
-        return value && String(value).trim() !== "";
-      }
+      ([, value]) => value && String(value).trim() !== ""
     );
 
-    // PrivateInfo mavjudligini tekshirish (id bor bo'lishi kerak)
     const hasPrivateInfo = privateInfo && privateInfo.id !== undefined;
 
     return isProfileComplete && isPrivateInfoComplete && hasPrivateInfo;
@@ -108,6 +98,17 @@ const JobDetail = () => {
       );
       navigate("/profile/edit-profile");
       return;
+    }
+
+    // ✅ Gender cheklovi
+    if (job.gender !== "BOTH" && privateInfo?.gender) {
+      const jobGender = job.gender.toUpperCase();
+      const userGender = privateInfo.gender.toUpperCase();
+
+      if (jobGender !== userGender) {
+        toast.error("Bu vakansiya sizning jinsingiz uchun mo'ljallanmagan");
+        return;
+      }
     }
 
     setIsApplying(true);
@@ -157,6 +158,23 @@ const JobDetail = () => {
   }
 
   const avatarUrl = getAvatarUrl(job.organization?.avatar);
+
+  // Gender mos keladimi?
+  const isGenderAllowed =
+    job.gender === "BOTH" ||
+    (privateInfo?.gender &&
+      job.gender?.toUpperCase() === privateInfo.gender?.toUpperCase());
+
+  // Button text uchun genderga qarab xabar
+  const getApplyButtonText = () => {
+    if (isApplying) return "Topshirilmoqda...";
+    if (!isGenderAllowed) {
+      return job.gender === "MALE"
+        ? "Bu vakansiya faqat erkaklar uchun"
+        : "Bu vakansiya faqat ayollar uchun";
+    }
+    return "Ariza topshirish";
+  };
 
   return (
     <div className="container">
@@ -212,10 +230,6 @@ const JobDetail = () => {
                     <Calendar size={18} />
                     <span>E'lon qilingan: {formatDate(job.createdAt)}</span>
                   </div>
-                  {/* <div className="stat-item">
-                    <Users size={18} />
-                    <span>Hozircha ariza topshirilmagan</span>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -224,9 +238,9 @@ const JobDetail = () => {
               <button
                 className="apply-button"
                 onClick={handleApply}
-                disabled={isApplying}
+                disabled={isApplying || !isGenderAllowed}
               >
-                {isApplying ? "Topshirilmoqda..." : "Ariza topshirish"}
+                {getApplyButtonText()}
               </button>
             </div>
           </div>
@@ -362,9 +376,9 @@ const JobDetail = () => {
             <button
               className="apply-button large"
               onClick={handleApply}
-              disabled={isApplying}
+              disabled={isApplying || !isGenderAllowed}
             >
-              {isApplying ? "Topshirilmoqda..." : "Ariza topshirish"}
+              {getApplyButtonText()}
             </button>
           </div>
         </div>

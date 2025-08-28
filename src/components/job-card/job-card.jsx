@@ -22,7 +22,10 @@ const JobCard = ({ job }) => {
     <div className="job-card">
       <div className="job-card-header">
         <div className="job-info">
-          <h3 className="job-title">{job.title}</h3>
+          <h3 className="job-title">
+            {job.title.length > 30 ? job.title.slice(0, 50) + "..." : job.title}
+          </h3>
+
           {/* <div className="job-meta">
             <span className="application-count">
               <Users size={14} />

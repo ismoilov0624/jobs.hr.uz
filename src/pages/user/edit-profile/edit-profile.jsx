@@ -216,48 +216,6 @@ export const EditProfile = () => {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const isMobile =
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        );
-
-      // File size tekshirish - mobil uchun kattaroq limit
-      const maxSize = isMobile ? 25 * 1024 * 1024 : 15 * 1024 * 1024; // 25 MB mobil, 15 MB desktop
-
-      if (file.size > maxSize) {
-        const maxSizeMB = isMobile ? 25 : 15;
-        toast.error(`Rasm hajmi ${maxSizeMB} MB dan oshmasligi kerak!`);
-        e.target.value = "";
-        return;
-      }
-
-      // Kengaytirilgan file type tekshirish - mobil formatlar uchun
-      const allowedTypes = [
-        "image/jpeg",
-        "image/jpg",
-        "image/png",
-        "image/gif",
-        "image/webp",
-        "image/heic", // iPhone rasmlar uchun
-        "image/heif", // iPhone rasmlar uchun
-      ];
-
-      if (!allowedTypes.includes(file.type.toLowerCase())) {
-        toast.error(
-          "Faqat rasm fayllari (JPEG, PNG, GIF, WebP, HEIC) qabul qilinadi!"
-        );
-        e.target.value = "";
-        return;
-      }
-
-      console.log("Avatar upload attempt:", {
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        isMobile: isMobile,
-        userAgent: navigator.userAgent,
-      });
-
       setAvatarFile(file);
 
       // FileReader bilan preview yaratish
@@ -267,14 +225,6 @@ export const EditProfile = () => {
         toast.success(
           "Rasm tanlandi! Saqlash uchun 'Saqlash' tugmasini bosing."
         );
-      };
-      reader.onerror = () => {
-        const errorMsg = isMobile
-          ? "Mobil qurilmada rasmni o'qishda xatolik. Boshqa rasm tanlang."
-          : "Rasmni o'qishda xatolik yuz berdi";
-        toast.error(errorMsg);
-        setAvatarFile(null);
-        setAvatarPreview(null);
       };
       reader.readAsDataURL(file);
     }
@@ -295,14 +245,7 @@ export const EditProfile = () => {
       };
 
       if (avatarFile) {
-        console.log("Uploading with avatar file:", avatarFile.name);
-
         const formData = new FormData();
-
-        const isMobile =
-          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent
-          );
 
         // Add all form fields
         Object.keys(formattedData).forEach((key) => {
@@ -315,24 +258,9 @@ export const EditProfile = () => {
           }
         });
 
-        if (isMobile) {
-          // Create a new Blob for mobile compatibility
-          const blob = new Blob([avatarFile], { type: avatarFile.type });
-          formData.append("avatar", blob, avatarFile.name);
-        } else {
-          formData.append("avatar", avatarFile, avatarFile.name);
-        }
-
-        console.log("FormData upload details:", {
-          isMobile: isMobile,
-          fileSize: avatarFile.size,
-          fileType: avatarFile.type,
-          fileName: avatarFile.name,
-        });
-
+        formData.append("avatar", avatarFile, avatarFile.name);
         await updateProfileMutation.mutateAsync(formData);
       } else {
-        console.log("Updating without avatar");
         await updateProfileMutation.mutateAsync(formattedData);
       }
 
@@ -341,55 +269,6 @@ export const EditProfile = () => {
       setAvatarPreview(null);
       setAvatarFile(null);
     } catch (error) {
-      const isMobile =
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        );
-
-      console.error("Profile update error:", error);
-      console.error("Error response:", error.response?.data);
-      console.error("Mobile device:", isMobile);
-      console.error("Network status:", navigator.onLine ? "Online" : "Offline");
-
-      if (error.response?.status === 413) {
-        const message = isMobile
-          ? "Rasm hajmi juda katta. Mobil qurilmada kichikroq rasm tanlang yoki rasmni siqing."
-          : "Rasm hajmi juda katta. Kichikroq rasm tanlang.";
-        toast.error(message);
-      } else if (error.response?.status === 415) {
-        const message = isMobile
-          ? "Rasm formati qo'llab-quvvatlanmaydi. JPEG yoki PNG formatida rasm tanlang."
-          : "Rasm formati qo'llab-quvvatlanmaydi.";
-        toast.error(message);
-      } else if (error.response?.status === 400) {
-        toast.error(
-          "Ma'lumotlar noto'g'ri. Barcha maydonlarni to'g'ri to'ldiring."
-        );
-      } else if (error.response?.status === 500) {
-        const message = isMobile
-          ? "Server xatoligi. Mobil internetni tekshiring va qayta urinib ko'ring."
-          : "Server xatoligi yuz berdi. Qayta urinib ko'ring.";
-        toast.error(message);
-      } else if (!navigator.onLine) {
-        toast.error("Internet aloqasi yo'q. Internetni tekshiring.");
-      } else if (isMobile && error.code === "NETWORK_ERROR") {
-        toast.error(
-          "Mobil internetda xatolik. Wi-Fi yoki mobil internetni tekshiring."
-        );
-      } else {
-        const message = isMobile
-          ? "Mobil qurilmada ma'lumotlarni yangilashda xatolik. Internetni tekshiring va qayta urinib ko'ring."
-          : "Asosiy ma'lumotlarni yangilashda xatolik yuz berdi";
-        toast.error(message);
-
-        if (isMobile) {
-          setTimeout(() => {
-            toast.info(
-              "Maslahat: Kichikroq rasm tanlang yoki Wi-Fi orqali urinib ko'ring."
-            );
-          }, 2000);
-        }
-      }
     } finally {
       setLoading("profile", false);
     }
@@ -791,7 +670,7 @@ export const EditProfile = () => {
                   <Camera size={20} />
                   <input
                     type="file"
-                    accept="image/jpeg,image/jpg,image/png,image/gif,image/webp,image/heic,image/heif"
+                    accept="*/*"
                     onChange={handleAvatarChange}
                     style={{ display: "none" }}
                   />

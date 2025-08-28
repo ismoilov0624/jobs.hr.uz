@@ -5,6 +5,8 @@
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 100%;
 
   .filters-header {
     display: flex;
@@ -41,11 +43,15 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
 
     .filter-group {
       display: flex;
       flex-direction: column;
       gap: 8px;
+      min-width: 180px;
 
       label {
         font-weight: 500;
@@ -61,6 +67,8 @@
         background: white;
         color: #374151;
         transition: border-color 0.2s;
+        width: 100%;
+        max-width: 100%;
 
         &:focus {
           outline: none;
@@ -74,6 +82,11 @@
   @media (max-width: 768px) {
     .filters-content {
       grid-template-columns: 1fr;
+      overflow-x: visible;
+
+      .filter-group {
+        min-width: unset;
+      }
     }
   }
 }

@@ -4,7 +4,9 @@
   border-radius: 12px;
   padding: 24px;
   transition: all 0.2s ease;
-  height: fit-content;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
 
   &:hover {
     transform: translateY(-2px);
@@ -14,6 +16,7 @@
 
   .job-card-header {
     margin-bottom: 20px;
+    flex-shrink: 0;
 
     .job-info {
       .job-title {
@@ -106,6 +109,8 @@
 
   .job-card-body {
     margin-bottom: 20px;
+    flex: 1;
+    overflow: hidden;
 
     .organization-info {
       margin-bottom: 16px;
@@ -189,6 +194,7 @@
     align-items: center;
     padding-top: 16px;
     border-top: 1px solid #f3f4f6;
+    flex-shrink: 0;
 
     .job-schedule {
       display: flex;
@@ -222,6 +228,8 @@
 @media (max-width: 768px) {
   .job-card {
     padding: 20px;
+    height: auto;
+    min-height: 280px;
 
     .job-card-footer {
       flex-direction: column;

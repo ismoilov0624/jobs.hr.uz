@@ -54,11 +54,18 @@ export default function Jobs() {
         }
       });
 
+      console.log("[v0] Sending API request with filters:", cleanFilters);
       return fetchJobs(cleanFilters);
     },
     keepPreviousData: true,
     retry: 3,
     retryDelay: 1000,
+    onSuccess: (data) => {
+      console.log("[v0] API response received:", data);
+    },
+    onError: (error) => {
+      console.log("[v0] API error:", error);
+    },
   });
 
   const { data: organizations = [] } = useOrganizations();
@@ -80,19 +87,29 @@ export default function Jobs() {
   const handleSearch = (e) => {
     e.preventDefault();
     const searchTerm = searchInput.trim();
-    setFilters((prev) => ({
-      ...prev,
-      search: searchTerm,
-      page: 1,
-    }));
+    console.log("[v0] Search submitted:", searchTerm);
+    setFilters((prev) => {
+      const newFilters = {
+        ...prev,
+        search: searchTerm,
+        page: 1,
+      };
+      console.log("[v0] New filters after search:", newFilters);
+      return newFilters;
+    });
   };
 
   const handleFilterChange = (newFilters) => {
-    setFilters((prev) => ({
-      ...prev,
-      ...newFilters,
-      page: 1,
-    }));
+    console.log("[v0] Filter change received:", newFilters);
+    setFilters((prev) => {
+      const updatedFilters = {
+        ...prev,
+        ...newFilters,
+        page: 1,
+      };
+      console.log("[v0] Updated filters:", updatedFilters);
+      return updatedFilters;
+    });
   };
 
   const handlePageChange = (page) => {
@@ -157,7 +174,7 @@ export default function Jobs() {
       meta = jobsData.data.meta || {};
     } else if (jobsData.data && Array.isArray(jobsData.data)) {
       jobs = jobsData.data;
-      meta = jobsData.meta || {};
+      meta = jobsData.data.meta || {};
     } else if (Array.isArray(jobsData.jobs)) {
       jobs = jobsData.jobs;
       meta = jobsData.meta || {};
@@ -165,6 +182,71 @@ export default function Jobs() {
       jobs = jobsData;
     }
   }
+
+  const filteredJobs = jobs.filter((job) => {
+    // Search filter
+    if (filters.search) {
+      const searchTerm = filters.search.toLowerCase();
+      const jobTitle = (job.title || "").toLowerCase();
+      const companyName = (
+        job.organization?.title ||
+        job.company ||
+        ""
+      ).toLowerCase();
+      const description = (job.description || "").toLowerCase();
+
+      if (
+        !jobTitle.includes(searchTerm) &&
+        !companyName.includes(searchTerm) &&
+        !description.includes(searchTerm)
+      ) {
+        return false;
+      }
+    }
+
+    // Organization filter
+    if (filters.organizationId) {
+      if (
+        job.organization?.id !== filters.organizationId &&
+        job.organizationId !== filters.organizationId
+      ) {
+        return false;
+      }
+    }
+
+    // Job type filter
+    if (filters.type) {
+      if (job.type !== filters.type) {
+        return false;
+      }
+    }
+
+    // Work location filter
+    if (filters.workLocation) {
+      if (job.workLocation !== filters.workLocation) {
+        return false;
+      }
+    }
+
+    // Gender filter
+    if (filters.gender) {
+      if (job.gender !== filters.gender) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
+  const filteredMeta = {
+    ...meta,
+    totalCount: filteredJobs.length,
+    totalPages: Math.ceil(filteredJobs.length / filters.limit),
+  };
+
+  const startIndex = (filters.page - 1) * filters.limit;
+  const endIndex = startIndex + filters.limit;
+  const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
 
   return (
     <div className="container">
@@ -211,7 +293,7 @@ export default function Jobs() {
         </div>
 
         {/* Active Filters Display */}
-        {hasActiveFilters && (
+        {/* {hasActiveFilters && (
           <div className="active-filters">
             <span className="active-filters-label">Faol filtrlar:</span>
             {filters.search && (
@@ -272,7 +354,7 @@ export default function Jobs() {
               </span>
             )}
           </div>
-        )}
+        )} */}
 
         {/* Filters */}
         {showFilters && (
@@ -291,8 +373,8 @@ export default function Jobs() {
               <p>Yuklanmoqda...</p>
             ) : (
               <p>
-                <strong>{meta.totalCount || jobs.length || 0}</strong> ta ish
-                e'loni topildi
+                <strong>{filteredMeta.totalCount || 0}</strong> ta ish e'loni
+                topildi
                 {filters.search && ` "${filters.search}" so'rovi bo'yicha`}
               </p>
             )}
@@ -314,9 +396,9 @@ export default function Jobs() {
                 </div>
               ))}
             </div>
-          ) : jobs.length > 0 ? (
+          ) : paginatedJobs.length > 0 ? (
             <div className="jobs-grid">
-              {jobs.map((job) => (
+              {paginatedJobs.map((job) => (
                 <JobCard key={job.id} job={job} />
               ))}
             </div>
@@ -340,10 +422,10 @@ export default function Jobs() {
         </div>
 
         {/* Pagination */}
-        {meta.totalPages > 1 && (
+        {filteredMeta.totalPages > 1 && (
           <Pagination
-            currentPage={meta.page || 1}
-            totalPages={meta.totalPages}
+            currentPage={filters.page || 1}
+            totalPages={filteredMeta.totalPages}
             onPageChange={handlePageChange}
           />
         )}

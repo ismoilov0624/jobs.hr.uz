@@ -13,7 +13,7 @@ export const Footer = () => {
   return (
     <footer className="footer">
       {/* Prokuratura tashabbusi banner */}
-      <div className="footer__prosecutor-banner">
+      {/* <div className="footer__prosecutor-banner">
         <div className="footer__prosecutor-content">
           <img
             src={logoP || "/placeholder.svg"}
@@ -31,7 +31,7 @@ export const Footer = () => {
             joriy etildi.
           </p>
         </div>
-      </div>
+      </div> */}
       <div className="footer__container">
         <Link to="/">
           <div className="header__logo">
